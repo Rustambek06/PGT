@@ -6,6 +6,7 @@ import com.tracker.DTO.TaskRequest;
 import com.tracker.Mapper.TaskMapper;
 import com.tracker.Repository.TaskRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -38,6 +39,19 @@ public class TaskService {
         Task savedTask = taskRepository.save(taskToSave);
 
         return taskMapper.toResponse(savedTask);
+    }
+
+    public TaskResponse update(TaskRequest request, Long id) {
+        Task taskToUpdate = taskRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Task not found"));
+        taskToUpdate.setTask(request.getTask());
+        taskToUpdate.setDescription(request.getDescription());
+        taskToUpdate.setCompleated(request.isCompleated());
+        taskToUpdate.setDueDate(request.getDueDate());
+
+        Task updatedTask = taskRepository.save(taskToUpdate);
+
+        return taskMapper.toResponse(updatedTask);
     }
 
     public void delete(Long id) {
