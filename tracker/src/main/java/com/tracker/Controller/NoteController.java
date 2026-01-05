@@ -28,6 +28,14 @@ public class NoteController {
         return noteService.save(request);
     }
 
+    @PutMapping("/{id}")
+    public NoteResponse update( 
+        @PathVariable("id") Long id,
+        @Valid @RequestBody NoteRequest request
+    ) {
+        return noteService.update(request, id);
+    }
+
     @DeleteMapping("/{id}") 
     public void delete(@PathVariable("id") Long id) {
         noteService.delete(id);

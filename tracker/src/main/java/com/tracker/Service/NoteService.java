@@ -6,6 +6,7 @@ import com.tracker.Mapper.NoteMapper;
 import com.tracker.DTO.NoteRequest;
 import com.tracker.DTO.NoteResponse;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -35,6 +36,18 @@ public class NoteService {
         Note savedNote = noteRepository.save(noteToSave);
 
         return noteMapper.toResponse(savedNote);
+    }
+
+    public NoteResponse update(NoteRequest request, Long id) {
+        Note noteToUpdate = noteRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Note not found"));
+
+        noteToUpdate.setTitle(request.getTitle());
+        noteToUpdate.setContent(request.getContent());
+
+        Note updatedNote = noteRepository.save(noteToUpdate);
+
+        return noteMapper.toResponse(updatedNote);
     }
 
     public void delete(Long id) {
