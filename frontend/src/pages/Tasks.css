@@ -1,0 +1,48 @@
+.tasks-page {
+  padding: 20px;
+  background-color: #333;
+  min-height: 100vh;
+  color: white;
+}
+
+.tasks-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.task-card {
+  background: linear-gradient(135deg, #ff8c00, #ffa500);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.task-card h3 {
+  margin-top: 0;
+}
+
+.task-card p {
+  margin: 10px 0;
+}
+
+.task-card small {
+  color: #ddd;
+}
+
+.loading {
+  padding: 20px;
+  color: white;
+}
+
+/* Mobile */
+@media (min-width: 769px) {
+  .tasks-page {
+    margin-left: 220px;
+  }
+
+  .loading {
+    margin-left: 220px;
+  }
+}
