@@ -18,19 +18,23 @@ public class Task {
     private String description;
     private boolean isCompleated = false;
     private LocalDateTime dueDate;
+
+    @ManyToOne
+    private Category category;
+    
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    public Task() {
-
-    }
+    public Task() {}
 
     public Task(
         String task, 
-        String description, 
+        String description,
+        Category category, 
         LocalDateTime dueDate
     ) {
         this.task = task;
         this.description = description;
+        this.category = category;
         this.dueDate = dueDate;
     }
 

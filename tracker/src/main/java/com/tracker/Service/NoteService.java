@@ -1,6 +1,8 @@
 package com.tracker.Service;
 
+import com.tracker.Entity.Category;
 import com.tracker.Entity.Note;
+import com.tracker.Repository.CategoryRepository;
 import com.tracker.Repository.NoteRepository;
 import com.tracker.Mapper.NoteMapper;
 import com.tracker.DTO.NoteRequest;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class NoteService {
     private final NoteRepository noteRepository;
+    private final CategoryRepository categoryRepository;
     private final NoteMapper noteMapper;
 
-    public NoteService(NoteRepository noteRepository, NoteMapper noteMapper) {
+    public NoteService(NoteRepository noteRepository, CategoryRepository categoryRepository, NoteMapper noteMapper) {
         this.noteRepository = noteRepository;
+        this.categoryRepository = categoryRepository;
         this.noteMapper = noteMapper;
     }
 
@@ -33,6 +37,11 @@ public class NoteService {
 
     public NoteResponse save(NoteRequest request) {
         Note noteToSave = noteMapper.toEntity(request);
+        
+        Category category = categoryRepository.findById(request.getCategoryId())
+            .orElseThrow(() -> new EntityNotFoundException("Category not found."));
+        noteToSave.setCategory(category);
+
         Note savedNote = noteRepository.save(noteToSave);
 
         return noteMapper.toResponse(savedNote);
@@ -44,6 +53,10 @@ public class NoteService {
 
         noteToUpdate.setTitle(request.getTitle());
         noteToUpdate.setContent(request.getContent());
+
+        Category category = categoryRepository.findById(request.getCategoryId())
+            .orElseThrow(() -> new EntityNotFoundException("Category not found."));
+        noteToUpdate.setCategory(category);
 
         Note updatedNote = noteRepository.save(noteToUpdate);
 

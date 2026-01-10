@@ -1,9 +1,11 @@
 package com.tracker.Service;
 
+import com.tracker.Entity.Category;
 import com.tracker.Entity.Task;
 import com.tracker.DTO.TaskResponse;
 import com.tracker.DTO.TaskRequest;
 import com.tracker.Mapper.TaskMapper;
+import com.tracker.Repository.CategoryRepository;
 import com.tracker.Repository.TaskRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -16,13 +18,16 @@ import java.util.stream.Collectors;
 @Transactional
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final CategoryRepository categoryRepository;
     private final TaskMapper taskMapper;
 
     public TaskService(
         TaskRepository taskRepository,
+        CategoryRepository categoryRepository,
         TaskMapper taskMapper
     ) {
         this.taskRepository = taskRepository;
+        this.categoryRepository = categoryRepository;
         this.taskMapper = taskMapper;
     }
 
@@ -36,6 +41,11 @@ public class TaskService {
 
     public TaskResponse save(TaskRequest request) {
         Task taskToSave = taskMapper.toEntity(request);
+
+        Category category = categoryRepository.findById(request.getCategoryId())
+            .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+        taskToSave.setCategory(category);
+        
         Task savedTask = taskRepository.save(taskToSave);
 
         return taskMapper.toResponse(savedTask);
@@ -44,10 +54,14 @@ public class TaskService {
     public TaskResponse update(TaskRequest request, Long id) {
         Task taskToUpdate = taskRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Task not found"));
+        Category category = categoryRepository.findById(request.getCategoryId())
+            .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+        
         taskToUpdate.setTask(request.getTask());
         taskToUpdate.setDescription(request.getDescription());
         taskToUpdate.setCompleated(request.isCompleated());
         taskToUpdate.setDueDate(request.getDueDate());
+        taskToUpdate.setCategory(category);
 
         Task updatedTask = taskRepository.save(taskToUpdate);
 

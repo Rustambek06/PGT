@@ -12,4 +12,6 @@ public class NoteRequest {
 
     @NotNull(message = "Content is mandatory")
     private String content;
+
+    private Long categoryId;
 }

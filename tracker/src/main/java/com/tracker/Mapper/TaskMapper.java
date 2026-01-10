@@ -26,6 +26,7 @@ public class TaskMapper {
         response.setDescription(task.getDescription());
         response.setCompleated(task.isCompleated());
         response.setDueDate(task.getDueDate());
+        response.setCategory(task.getCategory());
         response.setCreatedAt(task.getCreatedAt());
 
         return response;

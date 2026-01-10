@@ -23,6 +23,7 @@ public class NoteMapper {
         response.setId(note.getId());
         response.setTitle(note.getTitle());
         response.setContent(note.getContent());
+        response.setCategory(note.getCategory());
         response.setCreatedAt(note.getCreatedAt());
 
         return response;

@@ -1,0 +1,8 @@
+package com.tracker.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tracker.Entity.Category;
+
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+    
+}

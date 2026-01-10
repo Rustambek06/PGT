@@ -16,13 +16,18 @@ public class Note {
 
     private String title;
     private String content;
+    
+    @ManyToOne
+    private Category category;
+    
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Note() {}
 
-    public Note(String title, String content, LocalDateTime createdAt) {
+    public Note(String title, String content, Category category, LocalDateTime createdAt) {
         this.title = title;
         this.content = content;
+        this.category = category;
         this.createdAt = createdAt;
     }
 }

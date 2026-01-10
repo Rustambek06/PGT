@@ -16,6 +16,8 @@ public class TaskRequest {
     @NotNull(message = "Task status is mandatory")
     private boolean isCompleated;
 
+    private Long categoryId;
+
     @NotNull(message = "Completion date is mandatory")
     private LocalDateTime dueDate;
 }
