@@ -2,6 +2,8 @@ package com.tracker.Controller;
 
 import com.tracker.DTO.CategoryRequest;
 import com.tracker.DTO.CategoryResponse;
+import com.tracker.DTO.NoteResponse;
+import com.tracker.DTO.TaskResponse;
 import com.tracker.Service.CategoryService;
 import jakarta.validation.Valid;
 
@@ -21,6 +23,18 @@ public class CategoryController {
     @GetMapping
     public List<CategoryResponse> getAll() {
         return categoryService.getAll();
+    }
+
+    @GetMapping("/api/categories/{id}/notes")
+    public List<NoteResponse> getNotesByCategory(@PathVariable("id") Long id) {
+        List<NoteResponse> notesByCategory = categoryService.getNotesByCategory(id);
+        return notesByCategory;
+    }
+
+    @GetMapping("/api/categories/{id}/tasks")
+    public List<TaskResponse> getTasksByCategory(@PathVariable("id") Long id) {
+        List<TaskResponse> tasksByCategory = categoryService.getTasksByCategory(id);
+        return tasksByCategory;
     }
 
     @PostMapping
