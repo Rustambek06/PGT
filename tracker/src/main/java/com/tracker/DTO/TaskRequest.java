@@ -13,6 +13,9 @@ public class TaskRequest {
 
     private String description;
 
+    @NotNull(message = "Status of task in mandatory")
+    private String status;
+
     @NotNull(message = "Task status is mandatory")
     private boolean isCompleated;
 

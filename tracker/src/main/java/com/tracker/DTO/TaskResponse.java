@@ -11,6 +11,7 @@ public class TaskResponse {
     private Long id;
     private String task;
     private String description;
+    private String status;
     private boolean isCompleated;
     private LocalDateTime dueDate;
     private Category category;
