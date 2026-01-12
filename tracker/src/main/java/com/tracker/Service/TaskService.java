@@ -60,6 +60,7 @@ public class TaskService {
         taskToUpdate.setTask(request.getTask());
         taskToUpdate.setDescription(request.getDescription());
         taskToUpdate.setStatus(request.getStatus());
+        taskToUpdate.setPriority(request.getPriority());
         taskToUpdate.setCompleated(request.isCompleated());
         taskToUpdate.setDueDate(request.getDueDate());
         taskToUpdate.setCategory(category);

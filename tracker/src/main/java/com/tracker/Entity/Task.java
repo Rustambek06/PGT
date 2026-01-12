@@ -17,6 +17,7 @@ public class Task {
     private String task;
     private String description;
     private String status;
+    private String priority;
     private boolean isCompleated = false;
     private LocalDateTime dueDate;
 
