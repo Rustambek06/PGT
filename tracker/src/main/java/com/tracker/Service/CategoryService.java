@@ -12,6 +12,8 @@ import com.tracker.Repository.NoteRepository;
 import com.tracker.DTO.NoteResponse;
 import com.tracker.Mapper.NoteMapper;
 import com.tracker.Entity.Task;
+import com.tracker.Exceptions.CategoryInUseException;
+import com.tracker.Exceptions.CategoryNotFoundException;
 import com.tracker.Repository.TaskRepository;
 import com.tracker.DTO.TaskResponse;
 import com.tracker.Mapper.TaskMapper;
@@ -89,6 +91,21 @@ public class CategoryService {
     }
 
     public void delete(Long id) {
-        categoryRepository.deleteById(id);
+        boolean isCategoryExist = categoryRepository.existsById(id);
+
+        if (isCategoryExist) {
+            boolean isNotesExist = noteRepository.existsByCategoryId(id);
+            boolean isTasksExist = taskRepository.existsByCategoryId(id);
+
+            if (isNotesExist || isTasksExist) {
+                String message = "Category has linked notes and tasks";
+                throw new CategoryInUseException(message);
+            }
+
+            categoryRepository.deleteById(id);
+        } else {
+            String message = "Category not exist";
+            throw new CategoryNotFoundException(message);
+        }
     }
 }
