@@ -2,6 +2,7 @@ package com.tracker.Service;
 
 import com.tracker.Entity.Category;
 import com.tracker.Entity.Note;
+import com.tracker.Exceptions.NoteNotFoundException;
 import com.tracker.Repository.CategoryRepository;
 import com.tracker.Repository.NoteRepository;
 import com.tracker.Mapper.NoteMapper;
@@ -64,6 +65,13 @@ public class NoteService {
     }
 
     public void delete(Long id) {
-        noteRepository.deleteById(id);
+        boolean isNoteExist = noteRepository.existsById(id);
+
+        if (isNoteExist) {
+            noteRepository.deleteById(id);
+        } else {
+            String message = "Note not found";
+            throw new NoteNotFoundException(message);
+        }
     }   
 }

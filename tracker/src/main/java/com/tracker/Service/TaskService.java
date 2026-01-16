@@ -2,6 +2,7 @@ package com.tracker.Service;
 
 import com.tracker.Entity.Category;
 import com.tracker.Entity.Task;
+import com.tracker.Exceptions.TaskNotFoundException;
 import com.tracker.DTO.TaskResponse;
 import com.tracker.DTO.TaskRequest;
 import com.tracker.Mapper.TaskMapper;
@@ -71,6 +72,13 @@ public class TaskService {
     }
 
     public void delete(Long id) {
-        taskRepository.deleteById(id);
+        boolean isTaskExist = taskRepository.existById(id);
+
+        if (isTaskExist) {
+            taskRepository.deleteById(id);
+        } else {
+            String message = "Task not found";
+            throw new TaskNotFoundException(message);
+        }
     }
 }
