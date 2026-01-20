@@ -1,27 +1,32 @@
+/**
+ * Main App Component
+ * Маршрутизация между страницами Notes, Tasks и Calendar
+ */
+
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
-import Notes from './pages/Notes';
-import Tasks from './pages/Tasks';
-import Calendar from './pages/Calendar';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import MainLayout from './components/MainLayout';
+import NotesPage from './pages/NotesPage';
+import TasksPage from './pages/TasksPage';
+import CalendarPage from './pages/CalendarPage';
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
-      <div className="app">
-        <Sidebar />
-        <main>
+      <MainLayout>
+        <AnimatePresence mode="wait">
           <Routes>
-            <Route path="/notes" element={<Notes />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/" element={<Notes />} />
+            <Route path="/" element={<Navigate to="/notes" replace />} />
+            <Route path="/notes" element={<NotesPage />} />
+            <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
           </Routes>
-        </main>
-      </div>
+        </AnimatePresence>
+      </MainLayout>
     </Router>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,322 @@
+.container {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.header {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.subtitle {
+  color: #9ca3af;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.viewButtons {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  border-radius: 8px;
+  padding: 0.25rem;
+  background: rgba(255, 165, 0, 0.05);
+}
+
+.viewButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.viewButton:hover {
+  color: #ffa500;
+}
+
+.viewButton.active {
+  background: linear-gradient(135deg, #ffa500, #ff8c00);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+.navigationButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  background: rgba(255, 165, 0, 0.05);
+  color: #ffa500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.navigationButton:hover {
+  border-color: #ffa500;
+  box-shadow: 0 0 12px rgba(255, 165, 0, 0.3);
+}
+
+.dateDisplay {
+  color: #e5e7eb;
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 200px;
+  text-align: center;
+}
+
+.weekView {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.dayCell {
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  min-height: 150px;
+  transition: all 0.3s ease;
+}
+
+.dayCell:hover {
+  border-color: rgba(255, 165, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+}
+
+.dayCellDate {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffa500;
+  margin-bottom: 0.75rem;
+}
+
+.dayItems {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dayItem {
+  padding: 0.5rem;
+  background: rgba(255, 165, 0, 0.1);
+  border-left: 3px solid #ffa500;
+  border-radius: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.monthView {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.monthCard {
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.monthCard:hover {
+  border-color: rgba(255, 165, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+}
+
+.monthCardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffa500;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.monthStats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.stat {
+  flex: 1;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+.yearView {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.yearCard {
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.6) 0%, rgba(25, 40, 75, 0.6) 100%);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.yearCard:hover {
+  border-color: rgba(255, 165, 0, 0.5);
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.95) 0%, rgba(25, 40, 75, 0.95) 100%);
+}
+
+.yearCardMonth {
+  font-size: 0.9rem;
+  color: #ffa500;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.yearCardStat {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.dayView {
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dayViewDate {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffa500;
+  margin-bottom: 1.5rem;
+}
+
+.dayViewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.emptyMessage {
+  color: #9ca3af;
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+}
+
+@media (max-width: 1024px) {
+  .weekView {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .weekView {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .dayCell {
+    min-height: auto;
+    padding: 0.75rem;
+  }
+
+  .dayCellDate {
+    font-size: 0.9rem;
+  }
+
+  .dayItems {
+    font-size: 0.8rem;
+  }
+
+  .monthView {
+    grid-template-columns: 1fr;
+  }
+
+  .yearView {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .yearCard {
+    padding: 0.75rem;
+  }
+
+  .yearCardMonth {
+    font-size: 0.8rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .viewButtons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dateDisplay {
+    width: 100%;
+  }
+}

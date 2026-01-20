@@ -72,7 +72,7 @@ public class TaskService {
     }
 
     public void delete(Long id) {
-        boolean isTaskExist = taskRepository.existById(id);
+        boolean isTaskExist = taskRepository.existsById(id);
 
         if (isTaskExist) {
             taskRepository.deleteById(id);

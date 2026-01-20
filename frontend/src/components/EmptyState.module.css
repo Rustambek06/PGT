@@ -1,0 +1,31 @@
+﻿/* Empty State Component Styles */
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  min-height: 300px;
+  text-align: center;
+}
+
+.icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.title {
+  margin: 0 0 8px 0;
+  color: #e5e7eb;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.description {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 300px;
+}

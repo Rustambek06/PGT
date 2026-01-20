@@ -1,0 +1,115 @@
+.card {
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
+  border: 1px solid rgba(255, 165, 0, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: rgba(255, 165, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #22c55e;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  margin: 0;
+  flex: 1;
+  word-break: break-word;
+}
+
+.cardTitleCompleted {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.cardContent {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  word-break: break-word;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.statusBadge {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.statusBadgeCompleted {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+}
+
+.priorityBadge {
+  background: rgba(255, 165, 0, 0.15);
+  color: #ffa500;
+}
+
+.priorityBadgeHigh {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.cardDate {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cardCategory {
+  display: inline-block;
+  background: rgba(255, 165, 0, 0.15);
+  color: #ffa500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}

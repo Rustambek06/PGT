@@ -1,26 +1,21 @@
-export interface Note {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
+export * from './Note';
+export * from './Task';
+
+import type { Note } from './Note';
+import type { Task } from './Task';
+
+// Types для календаря
+export type CalendarViewType = 'week' | 'day' | 'month' | 'year';
+
+export interface CalendarState {
+  viewType: CalendarViewType;
+  year: number;
+  month: number;
+  week: number;
+  selectedDate: Date;
 }
 
-export interface Task {
-  id: number;
-  task: string;
-  description: string;
-  isCompleated: boolean;
-  dueDate: string;
-  createdAt: string;
-}
-
-export interface NoteRequest {
-  title: string;
-  content: string;
-}
-
-export interface TaskRequest {
-  task: string;
-  description: string;
-  dueDate: string;
+export interface DayItems {
+  notes: Note[];
+  tasks: Task[];
 }
