@@ -1,6 +1,6 @@
 /**
  * Main Layout Component
- * Основной макет приложения с Sidebar и основным контентом
+ * Premium layout wrapper with Sidebar and animated main content
  */
 
 import React from 'react';
@@ -17,13 +17,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { isMobile } = useWindowSize();
 
   const contentVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.4,
-        ease: 'easeOut',
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
     exit: {
@@ -31,7 +34,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       y: -20,
       transition: {
         duration: 0.2,
-        ease: 'easeIn',
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   };

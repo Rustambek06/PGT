@@ -1,6 +1,6 @@
 /**
  * Note Card Component
- * Отображает одну заметку в списке
+ * Premium note card with smooth interactions and line clamping
  */
 
 import React from 'react';
@@ -15,26 +15,28 @@ interface NoteCardProps {
 
 const NoteCard: React.FC<NoteCardProps> = ({ note, index = 0 }) => {
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.3,
         delay: index * 0.05,
-        ease: 'easeOut',
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
     hover: {
-      y: -4,
-      boxShadow: '0 12px 24px rgba(255, 165, 0, 0.2)',
+      y: -6,
       transition: { duration: 0.2 },
     },
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -45,23 +47,27 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, index = 0 }) => {
 
   return (
     <motion.div
-      className={styles.noteCard}
+      className={styles.card}
       variants={cardVariants}
       initial="hidden"
       animate="visible"
       whileHover="hover"
     >
-      <div className={styles.header}>
-        <h3 className={styles.title}>{note.title}</h3>
+      <div className={styles.cardHeader}>
+        <h3 className={styles.cardTitle}>{note.title}</h3>
         {note.category && (
-          <span className={styles.category}>{note.category.name}</span>
+          <span className={styles.cardCategory}>
+            {note.category.name || 'Uncategorized'}
+          </span>
         )}
       </div>
 
-      <p className={styles.content}>{note.content}</p>
+      <p className={styles.cardContent}>{note.content}</p>
 
-      <div className={styles.footer}>
-        <time className={styles.date}>{formatDate(note.createdAt)}</time>
+      <div className={styles.cardFooter}>
+        <time className={styles.cardDate}>
+          📅 {formatDate(note.createdAt)}
+        </time>
       </div>
     </motion.div>
   );

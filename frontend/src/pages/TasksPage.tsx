@@ -46,18 +46,18 @@ const TasksPage: React.FC = () => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
     >
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>✓ Tasks</h1>
-        <p className={styles.pageDescription}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>✓ Tasks</h1>
+        <p className={styles.subtitle}>
           Manage your tasks, set priorities, and track progress.
         </p>
       </div>
 
       {/* Filter Buttons */}
       {!loading && tasks.length > 0 && (
-        <div className={styles.filterContainer}>
+        <div className={styles.filters}>
           <button
-            className={`${styles.filterBtn} ${filter === null ? styles.active : ''}`}
+            className={`${styles.filterButton} ${filter === null ? styles.active : ''}`}
             onClick={() => setFilter(null)}
           >
             All ({tasks.length})
@@ -65,7 +65,7 @@ const TasksPage: React.FC = () => {
           {taskStatuses.map((status) => (
             <button
               key={status}
-              className={`${styles.filterBtn} ${filter === status ? styles.active : ''}`}
+              className={`${styles.filterButton} ${filter === status ? styles.active : ''}`}
               onClick={() => setFilter(status)}
             >
               {status} ({tasks.filter((t) => t.status === status).length})

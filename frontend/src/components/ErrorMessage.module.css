@@ -1,51 +1,109 @@
 ﻿/* Error Message Component Styles */
 .errorContainer {
-  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.1));
-  border: 1px solid rgba(220, 38, 38, 0.5);
-  border-radius: 8px;
-  padding: 20px;
-  margin: 20px 0;
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(239, 68, 68, 0.12));
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin: 1.5rem 0;
   backdrop-filter: blur(10px);
+  animation: slideInUp 0.4s ease;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .errorContent {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
 .errorTitle {
   margin: 0;
   color: #ef4444;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
 }
 
 .errorMessage {
   margin: 0;
-  color: #e5e7eb;
-  font-size: 14px;
-  line-height: 1.5;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
 }
 
 .retryButton {
   align-self: flex-start;
-  background: linear-gradient(135deg, #ffa500, #ff8c00);
-  color: #000;
+  background: var(--color-primary-gradient);
+  color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
+  transition: all var(--transition-base);
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
 }
 
 .retryButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3);
 }
 
 .retryButton:active {
   transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .errorContainer {
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .errorTitle {
+    font-size: 1rem;
+  }
+
+  .errorMessage {
+    font-size: 0.9rem;
+  }
+
+  .retryButton {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .errorContainer {
+    padding: 1.25rem;
+  }
+
+  .errorTitle {
+    font-size: 0.95rem;
+  }
+
+  .errorMessage {
+    font-size: 0.85rem;
+  }
+
+  .retryButton {
+    width: 100%;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
 }

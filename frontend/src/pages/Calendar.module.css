@@ -11,262 +11,526 @@
   }
 }
 
+/* Header and Title */
 .header {
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  animation: slideInUp 0.5s ease 0.1s backwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #e5e7eb;
-  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.02em;
+  background: var(--color-primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
-  color: #9ca3af;
-  font-size: 1rem;
-  margin-top: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.3px;
 }
 
+/* Controls Section */
 .controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.5) 0%, rgba(25, 40, 75, 0.4) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  animation: slideInUp 0.5s ease 0.2s backwards;
 }
 
 .viewButtons {
   display: flex;
   gap: 0.5rem;
-  border: 1px solid rgba(255, 165, 0, 0.3);
-  border-radius: 8px;
-  padding: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem;
   background: rgba(255, 165, 0, 0.05);
 }
 
 .viewButton {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   cursor: pointer;
-  border-radius: 6px;
-  transition: all 0.3s ease;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.viewButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 165, 0, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
 }
 
 .viewButton:hover {
-  color: #ffa500;
+  color: var(--color-primary);
+}
+
+.viewButton:hover::before {
+  transform: translateX(100%);
 }
 
 .viewButton.active {
-  background: linear-gradient(135deg, #ffa500, #ff8c00);
+  background: var(--color-primary-gradient);
   color: white;
   box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  font-weight: 700;
 }
 
 .navigationButton {
-  padding: 0.5rem 1rem;
-  border: 1px solid rgba(255, 165, 0, 0.3);
-  background: rgba(255, 165, 0, 0.05);
-  color: #ffa500;
-  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
   font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.navigationButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 165, 0, 0.1);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--transition-base);
 }
 
 .navigationButton:hover {
-  border-color: #ffa500;
-  box-shadow: 0 0 12px rgba(255, 165, 0, 0.3);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.15);
+}
+
+.navigationButton:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .dateDisplay {
-  color: #e5e7eb;
-  font-size: 1.1rem;
-  font-weight: 600;
-  min-width: 200px;
+  color: var(--color-text-primary);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   text-align: center;
+  min-width: 180px;
 }
 
+/* Week View */
 .weekView {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1rem;
+  gap: 1.25rem;
   margin-bottom: 2rem;
+  animation: slideInUp 0.5s ease 0.3s backwards;
 }
 
 .dayCell {
-  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
-  border: 1px solid rgba(255, 165, 0, 0.2);
-  border-radius: 12px;
-  padding: 1rem;
-  min-height: 150px;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.9) 0%, rgba(25, 40, 75, 0.85) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  min-height: 200px;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(10px);
+}
+
+.dayCell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
 }
 
 .dayCell:hover {
-  border-color: rgba(255, 165, 0, 0.5);
-  box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 12px 32px rgba(255, 165, 0, 0.15);
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, rgba(30, 50, 90, 1) 0%, rgba(25, 40, 75, 0.95) 100%);
+}
+
+.dayCell:hover::before {
+  opacity: 1;
 }
 
 .dayCellDate {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffa500;
-  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.3px;
+  position: relative;
+  z-index: 1;
 }
 
 .dayItems {
   font-size: 0.85rem;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .dayItem {
-  padding: 0.5rem;
-  background: rgba(255, 165, 0, 0.1);
-  border-left: 3px solid #ffa500;
-  border-radius: 4px;
+  padding: 0.6rem;
+  background: rgba(255, 165, 0, 0.12);
+  border-left: 3px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: all var(--transition-base);
+  border-radius: 4px;
 }
 
+.dayItem:hover {
+  background: rgba(255, 165, 0, 0.2);
+  border-left-color: var(--color-primary-light);
+  padding-left: 0.75rem;
+}
+
+/* Day View */
+.dayView {
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.9) 0%, rgba(25, 40, 75, 0.85) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  animation: slideInUp 0.5s ease 0.3s backwards;
+}
+
+.dayViewDate {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.5px;
+}
+
+.dayViewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Month View */
 .monthView {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
+  animation: slideInUp 0.5s ease 0.3s backwards;
 }
 
 .monthCard {
-  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
-  border: 1px solid rgba(255, 165, 0, 0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.9) 0%, rgba(25, 40, 75, 0.85) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.monthCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
 }
 
 .monthCard:hover {
-  border-color: rgba(255, 165, 0, 0.5);
-  box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+  border-color: var(--color-border-strong);
+  box-shadow: 0 12px 32px rgba(255, 165, 0, 0.15);
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, rgba(30, 50, 90, 1) 0%, rgba(25, 40, 75, 0.95) 100%);
+}
+
+.monthCard:hover::before {
+  opacity: 1;
 }
 
 .monthCardTitle {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #ffa500;
-  margin: 0 0 1rem 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0 0 1.25rem 0;
   text-align: center;
+  letter-spacing: -0.3px;
+  position: relative;
+  z-index: 1;
 }
 
 .monthStats {
   display: flex;
   justify-content: space-around;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .stat {
   flex: 1;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 165, 0, 0.05);
+  border: 1px solid rgba(255, 165, 0, 0.15);
+  transition: all var(--transition-base);
+}
+
+.monthCard:hover .stat {
+  background: rgba(255, 165, 0, 0.1);
+  border-color: rgba(255, 165, 0, 0.3);
+}
+
+.stat + .stat {
+  margin-left: 0.75rem;
 }
 
 .statLabel {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: var(--color-text-muted);
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .statValue {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #e5e7eb;
+  font-weight: 800;
+  color: var(--color-primary-light);
+  letter-spacing: -0.3px;
 }
 
+/* Year View */
 .yearView {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
+  animation: slideInUp 0.5s ease 0.3s backwards;
 }
 
 .yearCard {
-  background: linear-gradient(135deg, rgba(30, 50, 90, 0.6) 0%, rgba(25, 40, 75, 0.6) 100%);
-  border: 1px solid rgba(255, 165, 0, 0.2);
-  border-radius: 8px;
-  padding: 1rem;
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.75) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.yearCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
 }
 
 .yearCard:hover {
-  border-color: rgba(255, 165, 0, 0.5);
-  background: linear-gradient(135deg, rgba(30, 50, 90, 0.95) 0%, rgba(25, 40, 75, 0.95) 100%);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 24px rgba(255, 165, 0, 0.15);
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(30, 50, 90, 0.95) 0%, rgba(25, 40, 75, 0.9) 100%);
+}
+
+.yearCard:hover::before {
+  opacity: 1;
 }
 
 .yearCardMonth {
-  font-size: 0.9rem;
-  color: #ffa500;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.2px;
+  position: relative;
+  z-index: 1;
 }
 
 .yearCardStat {
-  font-size: 0.8rem;
-  color: #9ca3af;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  position: relative;
+  z-index: 1;
+  opacity: 0.8;
+  transition: opacity var(--transition-base);
 }
 
-.dayView {
-  background: linear-gradient(135deg, rgba(30, 50, 90, 0.8) 0%, rgba(25, 40, 75, 0.8) 100%);
-  border: 1px solid rgba(255, 165, 0, 0.2);
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
-.dayViewDate {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #ffa500;
-  margin-bottom: 1.5rem;
-}
-
-.dayViewContent {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+.yearCard:hover .yearCardStat {
+  opacity: 1;
 }
 
 .emptyMessage {
-  color: #9ca3af;
+  color: var(--color-text-muted);
   text-align: center;
   padding: 2rem;
   font-style: italic;
+  font-size: 1rem;
+  opacity: 0.75;
+}
+
+/* Responsive Design */
+@media (max-width: 1280px) {
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .monthView {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .viewButtons,
+  .navigationButton {
+    width: 100%;
+  }
 }
 
 @media (max-width: 1024px) {
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .controls {
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
   .weekView {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .dayCell {
+    min-height: 180px;
+    padding: 1rem;
+  }
+
+  .monthView {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .monthCard {
+    padding: 1.5rem;
+  }
+
+  .yearView {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    margin-bottom: 1.5rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    gap: 0.75rem;
   }
 
   .title {
     font-size: 1.75rem;
   }
 
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+  .viewButtons {
+    width: 100%;
+    justify-content: space-between;
   }
-}
 
-@media (max-width: 768px) {
+  .viewButton {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .navigationButton {
+    flex: 1;
+    padding: 0.5rem 1rem;
+  }
+
+  .dateDisplay {
+    width: 100%;
+    min-width: auto;
+  }
+
   .weekView {
     grid-template-columns: 1fr;
     gap: 0.75rem;
@@ -274,19 +538,59 @@
 
   .dayCell {
     min-height: auto;
-    padding: 0.75rem;
+    padding: 1rem;
   }
 
   .dayCellDate {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .dayItems {
+    gap: 0.5rem;
+  }
+
+  .dayItem {
     font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+
+  .dayView {
+    padding: 1.5rem;
+  }
+
+  .dayViewDate {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .monthView {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .monthCard {
+    padding: 1.25rem;
+  }
+
+  .monthCardTitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .stat {
+    padding: 0.5rem;
+  }
+
+  .stat + .stat {
+    margin-left: 0.5rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+  }
+
+  .statValue {
+    font-size: 1.35rem;
   }
 
   .yearView {
@@ -295,28 +599,85 @@
   }
 
   .yearCard {
-    padding: 0.75rem;
+    padding: 1rem;
   }
 
   .yearCardMonth {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
   }
 
+  .yearCardStat {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
   .title {
     font-size: 1.5rem;
   }
 
   .controls {
-    flex-direction: column;
-    align-items: stretch;
+    padding: 0.75rem;
+    gap: 0.5rem;
   }
 
-  .viewButtons {
-    width: 100%;
-    justify-content: center;
+  .viewButton {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .navigationButton {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
   }
 
   .dateDisplay {
-    width: 100%;
+    font-size: 1rem;
+  }
+
+  .weekView {
+    gap: 0.5rem;
+  }
+
+  .dayCell {
+    padding: 0.75rem;
+  }
+
+  .dayCellDate {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .dayView {
+    padding: 1.25rem;
+  }
+
+  .dayViewDate {
+    font-size: 1.35rem;
+  }
+
+  .monthView {
+    gap: 0.75rem;
+  }
+
+  .monthCard {
+    padding: 1rem;
+  }
+
+  .monthCardTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .statValue {
+    font-size: 1.2rem;
+  }
+
+  .yearView {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .yearCard {
+    padding: 0.75rem;
   }
 }

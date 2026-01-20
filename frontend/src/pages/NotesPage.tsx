@@ -34,9 +34,9 @@ const NotesPage: React.FC = () => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
     >
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>📝 Notes</h1>
-        <p className={styles.pageDescription}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>📝 Notes</h1>
+        <p className={styles.subtitle}>
           All your notes in one place. Create, edit, and manage your thoughts.
         </p>
       </div>

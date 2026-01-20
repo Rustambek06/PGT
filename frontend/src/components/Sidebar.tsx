@@ -1,9 +1,9 @@
 /**
- * Sidebar Component - Вертикальная панель навигации
- * На мобильных устройствах - сворачиваемое меню
+ * Sidebar Component
+ * Premium navigation panel with smooth animations and responsive design
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWindowSize } from '../hooks/useWindowSize';
@@ -14,33 +14,46 @@ const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isMobile } = useWindowSize();
 
+  // Close sidebar when navigating on mobile
+  useEffect(() => {
+    if (isMobile) {
+      setIsOpen(false);
+    }
+  }, [location.pathname, isMobile]);
+
   const sidebarVariants = {
     hidden: {
-      x: -100,
+      x: '-100%',
       opacity: 0,
     },
     visible: {
       x: 0,
       opacity: 1,
       transition: {
-        duration: 0.3,
-        ease: 'easeInOut',
+        duration: 0.4,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
     exit: {
-      x: -100,
+      x: '-100%',
       opacity: 0,
       transition: {
-        duration: 0.2,
-        ease: 'easeInOut',
+        duration: 0.3,
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   };
 
-  const handleNavClick = () => {
-    if (isMobile) {
-      setIsOpen(false);
-    }
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.3 },
+    },
+    exit: {
+      opacity: 0,
+      transition: { duration: 0.2 },
+    },
   };
 
   const navigationItems = [
@@ -49,66 +62,71 @@ const Sidebar: React.FC = () => {
     { path: '/calendar', label: 'Calendar', icon: '📅' },
   ];
 
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <>
-      {/* Hamburger Menu Button - только на мобильных */}
+      {/* Mobile Hamburger Toggle */}
       {isMobile && (
-        <button
-          className={styles.sidebarToggle}
+        <motion.button
+          className={`${styles.sidebarToggle} ${isOpen ? styles.open : ''}`}
           onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle navigation"
+          aria-label="Toggle navigation menu"
+          whileTap={{ scale: 0.95 }}
         >
           <span></span>
           <span></span>
           <span></span>
-        </button>
+        </motion.button>
       )}
 
-      {/* Mobile Overlay */}
+      {/* Overlay for Mobile */}
       <AnimatePresence>
         {isMobile && isOpen && (
           <motion.div
-            className={styles.overlay}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            className={`${styles.overlay} ${isOpen ? styles.visible : ''}`}
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             onClick={() => setIsOpen(false)}
           />
         )}
       </AnimatePresence>
 
       {/* Sidebar */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key="sidebar"
-          className={`${styles.sidebar} ${isMobile && !isOpen ? styles.hidden : ''}`}
-          variants={isMobile ? sidebarVariants : undefined}
-          initial={isMobile ? 'hidden' : undefined}
-          animate={isMobile && !isOpen ? 'hidden' : 'visible'}
-          exit={isMobile ? 'exit' : undefined}
-        >
-          <div className={styles.logo}>
-            <h1>🚀 Tracker</h1>
-          </div>
+      <motion.div
+        className={`${styles.sidebar} ${isMobile && !isOpen ? styles.hidden : ''}`}
+        variants={isMobile ? sidebarVariants : undefined}
+        initial={isMobile ? 'hidden' : undefined}
+        animate={isMobile ? (isOpen ? 'visible' : 'hidden') : undefined}
+        exit={isMobile ? 'exit' : undefined}
+      >
+        {/* Logo Section */}
+        <div className={styles.logo}>
+          <h1>🚀 Tracker</h1>
+        </div>
 
-          <nav className={styles.nav}>
-            {navigationItems.map((item) => (
+        {/* Navigation */}
+        <nav className={styles.nav}>
+          {navigationItems.map((item, index) => (
+            <motion.div
+              key={item.path}
+              initial={!isMobile ? { opacity: 0, x: -20 } : undefined}
+              animate={!isMobile ? { opacity: 1, x: 0 } : undefined}
+              transition={!isMobile ? { duration: 0.3, delay: index * 0.1 } : undefined}
+            >
               <Link
-                key={item.path}
                 to={item.path}
-                className={`${styles.navLink} ${
-                  location.pathname === item.path ? styles.active : ''
-                }`}
-                onClick={handleNavClick}
+                className={`${styles.navLink} ${isActive(item.path) ? styles.active : ''}`}
               >
                 <span className={styles.icon}>{item.icon}</span>
                 <span className={styles.label}>{item.label}</span>
               </Link>
-            ))}
-          </nav>
-        </motion.div>
-      </AnimatePresence>
+            </motion.div>
+          ))}
+        </nav>
+      </motion.div>
     </>
   );
 };

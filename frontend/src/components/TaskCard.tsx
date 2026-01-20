@@ -1,6 +1,6 @@
 /**
  * Task Card Component
- * Отображает одну задачу в списке
+ * Premium task card with smooth interactions and status indicators
  */
 
 import React from 'react';
@@ -16,51 +16,40 @@ interface TaskCardProps {
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, index = 0, onToggle }) => {
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.3,
         delay: index * 0.05,
-        ease: 'easeOut',
+        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
     hover: {
-      y: -4,
-      boxShadow: '0 12px 24px rgba(255, 165, 0, 0.2)',
+      y: -6,
       transition: { duration: 0.2 },
     },
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority?.toUpperCase()) {
-      case 'HIGH':
-        return styles.priorityHigh;
-      case 'MEDIUM':
-        return styles.priorityMedium;
-      case 'LOW':
-        return styles.priorityLow;
-      default:
-        return '';
+  const getPriorityBadgeClass = (priority: string) => {
+    const priorityUpper = priority?.toUpperCase();
+    if (priorityUpper === 'HIGH') {
+      return styles.priorityBadgeHigh;
     }
+    return styles.priorityBadge;
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status?.toUpperCase()) {
-      case 'DONE':
-      case 'COMPLETED':
-        return styles.statusDone;
-      case 'IN_PROGRESS':
-        return styles.statusInProgress;
-      default:
-        return styles.statusTodo;
-    }
+  const getStatusBadgeClass = (isCompleted: boolean) => {
+    return isCompleted ? styles.statusBadgeCompleted : styles.statusBadge;
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
@@ -69,42 +58,48 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, index = 0, onToggle }) => {
 
   return (
     <motion.div
-      className={`${styles.taskCard} ${task.isCompleated ? styles.completed : ''}`}
+      className={styles.card}
       variants={cardVariants}
       initial="hidden"
       animate="visible"
       whileHover="hover"
     >
-      <div className={styles.header}>
+      <div className={styles.cardHeader}>
         <input
           type="checkbox"
           className={styles.checkbox}
           checked={task.isCompleated}
           onChange={(e) => onToggle?.(task.id, e.target.checked)}
-          aria-label={`Toggle task completion for ${task.task}`}
+          aria-label={`Toggle task: ${task.task}`}
         />
-        <h3 className={styles.title}>{task.task}</h3>
+        <h3 className={`${styles.cardTitle} ${task.isCompleated ? styles.cardTitleCompleted : ''}`}>
+          {task.task}
+        </h3>
       </div>
 
-      {task.description && <p className={styles.description}>{task.description}</p>}
+      {task.description && (
+        <p className={styles.cardContent}>{task.description}</p>
+      )}
 
-      <div className={styles.metadata}>
+      <div className={styles.cardFooter}>
         <div className={styles.badges}>
-          <span className={`${styles.status} ${getStatusColor(task.status)}`}>
-            {task.status}
+          <span className={`${styles.badge} ${getStatusBadgeClass(task.isCompleated)}`}>
+            {task.isCompleated ? '✓ Done' : task.status || 'Todo'}
           </span>
-          <span className={`${styles.priority} ${getPriorityColor(task.priority)}`}>
-            {task.priority}
+          <span className={`${styles.badge} ${getPriorityBadgeClass(task.priority)}`}>
+            {task.priority || 'Normal'}
           </span>
         </div>
 
-        <div className={styles.footer}>
+        <div className={styles.cardMeta}>
           {task.category && (
-            <span className={styles.category}>{task.category.name}</span>
+            <span className={styles.cardCategory}>
+              {task.category.name || 'Uncategorized'}
+            </span>
           )}
-          <time className={styles.dueDate}>
-            Due: {formatDate(task.dueDate)}
-          </time>
+          <span className={styles.cardDate}>
+            📅 {formatDate(task.dueDate)}
+          </span>
         </div>
       </div>
     </motion.div>
