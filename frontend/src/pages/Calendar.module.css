@@ -159,7 +159,7 @@
 .weekView {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
   margin-bottom: 2rem;
   animation: slideInUp 0.5s ease 0.3s backwards;
 }
@@ -168,8 +168,9 @@
   background: linear-gradient(135deg, rgba(30, 50, 90, 0.9) 0%, rgba(25, 40, 75, 0.85) 100%);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  min-height: 200px;
+  padding: 1rem;
+  min-height: 240px;
+  max-height: 340px;
   transition: all var(--transition-base);
   cursor: pointer;
   position: relative;
@@ -200,43 +201,116 @@
   opacity: 1;
 }
 
-.dayCellDate {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 1rem;
-  letter-spacing: -0.3px;
-  position: relative;
-  z-index: 1;
-}
-
-.dayItems {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
+.dayCellHeader {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  flex-grow: 1;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
   position: relative;
   z-index: 1;
 }
 
-.dayItem {
-  padding: 0.6rem;
-  background: rgba(255, 165, 0, 0.12);
-  border-left: 3px solid var(--color-primary);
+.dayName {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dayNumber {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.dayCellContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 0.25rem;
+  position: relative;
+  z-index: 1;
+  min-height: 0;
+}
+
+.dayCellContent::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dayCellContent::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dayCellContent::-webkit-scrollbar-thumb {
+  background: rgba(255, 165, 0, 0.3);
+  border-radius: 2px;
+}
+
+.dayCellContent::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 165, 0, 0.5);
+}
+
+.emptyDay {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: center;
+  padding: 1rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.noteItem,
+.taskItem {
+  padding: 0.55rem 0.75rem;
+  background: rgba(255, 165, 0, 0.08);
+  border-left: 2px solid var(--color-primary);
   border-radius: var(--radius-sm);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: all var(--transition-base);
-  border-radius: 4px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
-.dayItem:hover {
-  background: rgba(255, 165, 0, 0.2);
+.noteItem:hover,
+.taskItem:hover {
+  background: rgba(255, 165, 0, 0.15);
   border-left-color: var(--color-primary-light);
-  padding-left: 0.75rem;
+  padding-left: 1rem;
+}
+
+.taskItem.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.itemIcon {
+  flex-shrink: 0;
+  font-size: 0.85em;
+}
+
+.itemTitle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Day View */
@@ -533,34 +607,45 @@
 
   .weekView {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
-  }
-
-  .dayCell {
-    min-height: auto;
-    padding: 1rem;
-  }
-
-  .dayCellDate {
-    font-size: 1rem;
-  }
-
-  .dayItems {
     gap: 0.5rem;
   }
 
-  .dayItem {
-    font-size: 0.8rem;
-    padding: 0.5rem;
+  .dayCell {
+    min-height: 180px;
+    max-height: 280px;
+    padding: 0.85rem;
   }
 
-  .dayView {
+  .dayCellHeader {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .dayName {
+    font-size: 0.75rem;
+  }
+
+  .dayNumber {
+    font-size: 1rem;
+  }
+
+  .dayCellContent {
+    gap: 0.4rem;
+  }
+
+  .noteItem,
+  .taskItem {
+    font-size: 0.75rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  .dayViewContainer {
     padding: 1.5rem;
   }
 
   .dayViewDate {
-    font-size: 1.5rem;
-    margin-bottom: 1.25rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
 
   .monthView {

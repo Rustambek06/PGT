@@ -1,8 +1,8 @@
 .card {
-  background: linear-gradient(135deg, rgba(30, 50, 90, 0.9) 0%, rgba(25, 40, 75, 0.85) 100%);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.92) 100%);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 1.5rem;
+  padding: 1.4rem;
   transition: all var(--transition-base);
   cursor: pointer;
   overflow: hidden;
@@ -18,7 +18,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 165, 0, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.08), transparent);
   opacity: 0;
   transition: opacity var(--transition-base);
   pointer-events: none;
@@ -28,7 +28,7 @@
   border-color: var(--color-border-strong);
   box-shadow: 0 16px 40px rgba(255, 165, 0, 0.15);
   transform: translateY(-6px);
-  background: linear-gradient(135deg, rgba(30, 50, 90, 1) 0%, rgba(25, 40, 75, 0.95) 100%);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.98) 0%, rgba(22, 33, 62, 0.95) 100%);
 }
 
 .card:hover::before {
@@ -36,19 +36,19 @@
 }
 
 .cardHeader {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.2rem;
   position: relative;
   z-index: 1;
 }
 
 .cardTitle {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
   word-break: break-word;
-  line-height: 1.4;
-  letter-spacing: -0.3px;
+  line-height: 1.5;
+  letter-spacing: -0.2px;
   transition: color var(--transition-base);
 }
 
@@ -58,14 +58,14 @@
 
 .cardContent {
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.65;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.2rem;
   flex-grow: 1;
   opacity: 0.85;
   transition: opacity var(--transition-base);
@@ -131,19 +131,19 @@
   }
 
   .cardTitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .cardContent {
     -webkit-line-clamp: 3;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (max-width: 768px) {
   .card {
     min-height: auto;
-    padding: 1.25rem;
+    padding: 1.2rem;
   }
 
   .cardHeader {
@@ -151,12 +151,12 @@
   }
 
   .cardTitle {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
 
   .cardContent {
     -webkit-line-clamp: 3;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-bottom: 1rem;
   }
 
