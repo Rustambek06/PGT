@@ -26,7 +26,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       y: 0,
       transition: {
         duration: 0.4,
-        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
     exit: {
@@ -34,7 +34,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       y: -20,
       transition: {
         duration: 0.2,
-        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   };
