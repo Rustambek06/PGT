@@ -25,7 +25,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, index = 0 }) => {
       transition: {
         duration: 0.3,
         delay: index * 0.05,
-        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
     hover: {

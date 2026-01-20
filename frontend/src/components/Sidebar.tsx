@@ -31,7 +31,7 @@ const Sidebar: React.FC = () => {
       opacity: 1,
       transition: {
         duration: 0.4,
-        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
     exit: {
@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
       opacity: 0,
       transition: {
         duration: 0.3,
-        ease: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        ease: [0.4, 0, 0.2, 1],
       },
     },
   };
