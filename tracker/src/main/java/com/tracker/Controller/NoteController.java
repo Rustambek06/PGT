@@ -5,12 +5,12 @@ import com.tracker.DTO.NoteRequest;
 import com.tracker.Service.NoteService;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/notes")
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 public class NoteController {
     private final NoteService noteService;
 
@@ -19,8 +19,8 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<NoteResponse> getAll() {
-        return noteService.getAll();
+    public Page<NoteResponse> getAll(Pageable pageable) {
+        return noteService.getAll(pageable);
     }
 
     @PostMapping

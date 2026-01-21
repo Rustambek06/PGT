@@ -11,9 +11,9 @@ import com.tracker.DTO.NoteResponse;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -28,12 +28,10 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public List<NoteResponse> getAll() {
-        List<Note> notes = noteRepository.findAll();
+    public Page<NoteResponse> getAll(Pageable pageable) {
+        Page<Note> notes = noteRepository.findAll(pageable);
 
-        return notes.stream()
-                .map(noteMapper::toResponse)
-                .collect(Collectors.toList());
+        return notes.map(noteMapper::toResponse);
     }
 
     public NoteResponse save(NoteRequest request) {
