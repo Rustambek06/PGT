@@ -5,6 +5,7 @@ import com.tracker.DTO.CategoryRequest;
 import com.tracker.DTO.CategoryResponse;
 import com.tracker.Mapper.CategoryMapper;
 import com.tracker.Repository.CategoryRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.tracker.Entity.Note;
@@ -49,12 +50,10 @@ public class CategoryService {
         this.taskMapper = taskMapper;
     }
 
-    public List<CategoryResponse> getAll() {
-        List<Category> categories = categoryRepository.findAll();
+    public Page<CategoryResponse> getAll(Pageable pageable) {
+        Page<Category> categories = categoryRepository.findAll(pageable);
 
-        return categories.stream()
-            .map(categoryMapper::toResponse)
-            .collect(Collectors.toList());
+        return categories.map(categoryMapper::toResponse);
     }
 
     public List<NoteResponse> getNotesByCategory(Long categoryId) {

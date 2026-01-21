@@ -7,6 +7,7 @@ import com.tracker.DTO.TaskResponse;
 import com.tracker.Service.CategoryService;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,8 +22,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<CategoryResponse> getAll() {
-        return categoryService.getAll();
+    public Page<CategoryResponse> getAll(Pageable pageable) {
+        return categoryService.getAll(pageable);
     }
 
     @GetMapping("/api/categories/{id}/notes")

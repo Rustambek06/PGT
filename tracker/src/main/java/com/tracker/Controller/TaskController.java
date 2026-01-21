@@ -5,8 +5,8 @@ import com.tracker.DTO.TaskRequest;
 import com.tracker.Service.TaskService;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -19,8 +19,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<TaskResponse> getAll() {
-        return taskService.getAll();
+    public Page<TaskResponse> getAll(Pageable pageable) {
+        return taskService.getAll(pageable);
     }
 
     @PostMapping

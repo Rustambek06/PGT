@@ -11,9 +11,9 @@ import com.tracker.Repository.TaskRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -32,12 +32,10 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
-    public List<TaskResponse> getAll() {
-        List<Task> tasks = taskRepository.findAll();
+    public Page<TaskResponse> getAll(Pageable pageable) {
+        Page<Task> tasks = taskRepository.findAll(pageable);
 
-        return tasks.stream()
-            .map(taskMapper::toResponse)
-            .collect(Collectors.toList());
+        return tasks.map(taskMapper::toResponse);
     }
 
     public TaskResponse save(TaskRequest request) {
