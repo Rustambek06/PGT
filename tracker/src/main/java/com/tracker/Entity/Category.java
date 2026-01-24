@@ -16,6 +16,9 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @OneToOne
+    private User user;
+
     public Category() {}
 
     public Category(String name) {

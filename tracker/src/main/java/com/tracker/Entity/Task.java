@@ -23,6 +23,9 @@ public class Task {
 
     @ManyToOne
     private Category category;
+
+    @OneToOne
+    private User user;
     
     private LocalDateTime createdAt = LocalDateTime.now();
 
