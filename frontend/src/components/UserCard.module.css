@@ -1,0 +1,275 @@
+.card {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.92) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 220px;
+  backdrop-filter: blur(10px);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 165, 0, 0.08), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: 0 16px 40px rgba(255, 165, 0, 0.15);
+  transform: translateY(-6px);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.98) 0%, rgba(22, 33, 62, 0.95) 100%);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
+
+.userInfo {
+  display: flex;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  background: var(--color-primary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.name {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  letter-spacing: -0.2px;
+}
+
+.card:hover .name {
+  color: var(--color-primary-light);
+}
+
+.email {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  opacity: 0.85;
+  word-break: break-all;
+}
+
+.password {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.masked {
+  font-family: var(--font-mono);
+  letter-spacing: 0.2em;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.button {
+  flex: 1;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  letter-spacing: 0.3px;
+  min-height: 36px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.editButton {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(59, 130, 246, 0.15));
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.editButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(59, 130, 246, 0.25));
+  border-color: rgba(59, 130, 246, 0.6);
+  color: #93c5fd;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+}
+
+.deleteButton {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.15));
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.35), rgba(239, 68, 68, 0.25));
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #f87171;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.2);
+}
+
+@media (max-width: 1024px) {
+  .card {
+    min-height: 200px;
+    padding: 1.2rem;
+  }
+
+  .name {
+    font-size: 1rem;
+  }
+
+  .button {
+    font-size: 0.75rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-height: auto;
+    padding: 1.2rem;
+  }
+
+  .cardContent {
+    gap: 1rem;
+  }
+
+  .userInfo {
+    gap: 0.9rem;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    font-size: 1.2rem;
+  }
+
+  .name {
+    font-size: 1rem;
+  }
+
+  .email {
+    font-size: 0.85rem;
+  }
+
+  .actions {
+    gap: 0.6rem;
+  }
+
+  .button {
+    font-size: 0.75rem;
+    padding: 0.55rem 0.7rem;
+    min-height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .cardContent {
+    gap: 0.8rem;
+  }
+
+  .userInfo {
+    gap: 0.8rem;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 1rem;
+  }
+
+  .details {
+    min-width: 0;
+  }
+
+  .name {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .email {
+    font-size: 0.8rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .password {
+    font-size: 0.75rem;
+  }
+
+  .actions {
+    gap: 0.5rem;
+  }
+
+  .button {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.6rem;
+    min-height: 30px;
+  }
+}

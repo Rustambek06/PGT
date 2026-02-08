@@ -1,10 +1,37 @@
 export * from './Note';
 export * from './Task';
 
-import type { Note } from './Note';
-import type { Task } from './Task';
+// Re-export shared utilities and pagination
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+  first: boolean;
+  last: boolean;
+}
 
-// Types для календаря
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password?: string;
+}
+
+export interface UserRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface UserResponse {
+  id: number;
+  name: string;
+  email?: string;
+}
+
+// Calendar helper types
 export type CalendarViewType = 'week' | 'day' | 'month' | 'year';
 
 export interface CalendarState {
@@ -15,7 +42,12 @@ export interface CalendarState {
   selectedDate: Date;
 }
 
-export interface DayItems {
-  notes: Note[];
-  tasks: Task[];
+// Delete Confirmation
+export interface DeleteConfirmation {
+  isOpen: boolean;
+  itemId: number | null;
+  itemName: string;
+  itemType: 'note' | 'task' | 'user';
+  onConfirm: () => void;
+  onCancel: () => void;
 }

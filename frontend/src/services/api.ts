@@ -15,6 +15,24 @@ const axiosInstance = axios.create({
   },
 });
 
+// Helper: ensure there is at least one category and return its id
+const getOrCreateDefaultCategory = async (): Promise<number> => {
+  try {
+    // fetch first page of categories
+    const resp = await axiosInstance.get('/categories', { params: { page: 0, size: 1 } });
+    const page = resp.data as any;
+    if (page && page.totalElements && page.totalElements > 0 && page.content && page.content.length > 0) {
+      return page.content[0].id;
+    }
+    // create default category
+    const createResp = await axiosInstance.post('/categories', { name: 'Uncategorized' });
+    return createResp.data.id;
+  } catch (err) {
+    console.warn('Could not ensure default category, falling back to 1', err);
+    return 1;
+  }
+};
+
 // ==================== NOTES ====================
 
 export const notesApi = {
@@ -49,6 +67,10 @@ export const notesApi = {
    */
   create: async (note: NoteRequest): Promise<Note> => {
     try {
+      // ensure categoryId exists on backend
+      if (!note.categoryId) {
+        note.categoryId = await getOrCreateDefaultCategory();
+      }
       const response = await axiosInstance.post<Note>('/notes', note);
       return response.data;
     } catch (error) {
@@ -62,6 +84,9 @@ export const notesApi = {
    */
   update: async (id: number, note: NoteRequest): Promise<Note> => {
     try {
+      if (!note.categoryId) {
+        note.categoryId = await getOrCreateDefaultCategory();
+      }
       const response = await axiosInstance.put<Note>(`/notes/${id}`, note);
       return response.data;
     } catch (error) {
@@ -128,6 +153,13 @@ export const tasksApi = {
    */
   create: async (task: TaskRequest): Promise<Task> => {
     try {
+      if (!task.categoryId) {
+        task.categoryId = await getOrCreateDefaultCategory();
+      }
+      // ensure dueDate is a full LocalDateTime string if only date provided
+      if (task.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) {
+        task.dueDate = `${task.dueDate}T00:00:00`;
+      }
       const response = await axiosInstance.post<Task>('/tasks', task);
       return response.data;
     } catch (error) {
@@ -141,6 +173,12 @@ export const tasksApi = {
    */
   update: async (id: number, task: TaskRequest): Promise<Task> => {
     try {
+      if (!task.categoryId) {
+        task.categoryId = await getOrCreateDefaultCategory();
+      }
+      if (task.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) {
+        task.dueDate = `${task.dueDate}T00:00:00`;
+      }
       const response = await axiosInstance.put<Task>(`/tasks/${id}`, task);
       return response.data;
     } catch (error) {

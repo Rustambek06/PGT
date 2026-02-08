@@ -10,6 +10,7 @@ import MainLayout from './components/MainLayout';
 import NotesPage from './pages/NotesPage';
 import TasksPage from './pages/TasksPage';
 import CalendarPage from './pages/CalendarPage';
+import { UsersPage } from './pages/UsersPage';
 import './App.css';
 
 const App: React.FC = () => {
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="/notes" element={<NotesPage />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/users" element={<UsersPage />} />
           </Routes>
         </AnimatePresence>
       </MainLayout>
