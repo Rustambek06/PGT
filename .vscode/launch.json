@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "TrackerApplication",
+            "request": "launch",
+            "mainClass": "com.tracker.TrackerApplication",
+            "projectName": "tracker",
+            "envFile": "${workspaceFolder}/.env" // Добавлено сюда
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
