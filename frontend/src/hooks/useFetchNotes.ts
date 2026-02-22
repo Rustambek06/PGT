@@ -6,7 +6,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { PageResponse, Note, NoteRequest } from '../types';
 import apiService from '../services/apiService';
 
-interface UseFetchNotesReturn {
+export interface UseFetchNotesReturn {
   data: PageResponse<Note>;
   notes: Note[];
   loading: boolean;

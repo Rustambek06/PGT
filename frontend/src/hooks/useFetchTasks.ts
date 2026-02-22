@@ -6,7 +6,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { PageResponse, Task, TaskRequest } from '../types';
 import apiService from '../services/apiService';
 
-interface UseFetchTasksReturn {
+export interface UseFetchTasksReturn {
   data: PageResponse<Task>;
   tasks: Task[];
   loading: boolean;
