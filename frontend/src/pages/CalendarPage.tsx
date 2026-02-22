@@ -157,13 +157,13 @@ const CalendarPage: React.FC = () => {
                 <div className={styles.emptyDay}>No items</div>
               ) : (
                 <>
-                  {items.notes.map((note) => (
+                  {items.notes.map((note: Note) => (
                     <div key={`note-${note.id}`} className={styles.noteItem}>
                       <span className={styles.itemIcon}>📝</span>
                       <span className={styles.itemTitle}>{note.title}</span>
                     </div>
                   ))}
-                  {items.tasks.map((task) => (
+                  {items.tasks.map((task: Task) => (
                     <div
                       key={`task-${task.id}`}
                       className={`${styles.taskItem} ${
@@ -199,7 +199,7 @@ const CalendarPage: React.FC = () => {
               <p className={styles.emptyMessage}>No notes for this day</p>
             ) : (
               <div className={styles.itemsList}>
-                {items.notes.map((note) => (
+                {items.notes.map((note: Note) => (
                   <div key={`note-${note.id}`} className={styles.fullItem}>
                     <h4>{note.title}</h4>
                     <p>{note.content}</p>
@@ -216,7 +216,7 @@ const CalendarPage: React.FC = () => {
               <p className={styles.emptyMessage}>No tasks for this day</p>
             ) : (
               <div className={styles.itemsList}>
-                {items.tasks.map((task) => (
+                {items.tasks.map((task: Task) => (
                   <div
                     key={`task-${task.id}`}
                     className={`${styles.fullItem} ${task.isCompleated ? styles.completed : ''}`}

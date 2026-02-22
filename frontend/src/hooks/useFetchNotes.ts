@@ -8,9 +8,11 @@ import apiService from '../services/apiService';
 
 interface UseFetchNotesReturn {
   data: PageResponse<Note>;
+  notes: Note[];
   loading: boolean;
   error: string | null;
   fetchNotes: (page: number) => Promise<void>;
+  refetch: () => Promise<void>;
   createNote: (note: NoteRequest) => Promise<void>;
   updateNote: (id: number, note: NoteRequest) => Promise<void>;
   deleteNote: (id: number) => Promise<void>;
@@ -116,5 +118,5 @@ export const useFetchNotes = (): UseFetchNotesReturn => {
     createNote,
     updateNote,
     deleteNote,
-  } as unknown as UseFetchNotesReturn & { notes: Note[]; refetch: () => Promise<void> };
+  };
 };

@@ -8,9 +8,11 @@ import apiService from '../services/apiService';
 
 interface UseFetchTasksReturn {
   data: PageResponse<Task>;
+  tasks: Task[];
   loading: boolean;
   error: string | null;
   fetchTasks: (page: number) => Promise<void>;
+  refetch: () => Promise<void>;
   createTask: (task: TaskRequest) => Promise<void>;
   updateTask: (id: number, task: TaskRequest) => Promise<void>;
   deleteTask: (id: number) => Promise<void>;
@@ -116,5 +118,5 @@ export const useFetchTasks = (): UseFetchTasksReturn => {
     createTask,
     updateTask,
     deleteTask,
-  } as unknown as UseFetchTasksReturn & { tasks: Task[]; refetch: () => Promise<void> };
+  };
 };
