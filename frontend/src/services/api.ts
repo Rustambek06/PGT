@@ -6,7 +6,7 @@
 import axios from 'axios';
 import type { Note, Task, NoteRequest, TaskRequest } from '../types';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://personalgrowthtracker.onrender.com/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
