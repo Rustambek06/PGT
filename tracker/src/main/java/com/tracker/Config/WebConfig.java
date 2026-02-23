@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Разрешаем все пути
-                .allowedOrigins("https://pgtvercel.vercel.app") // URL твоего фронтенда
+                .allowedOrigins("https://pgtracker.vercel.app") // URL твоего фронтенда
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
