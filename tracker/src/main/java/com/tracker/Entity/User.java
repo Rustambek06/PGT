@@ -18,7 +18,7 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String role = "USER";
+    private String role;
     private String encodedPassword;
     
     public User() {}
