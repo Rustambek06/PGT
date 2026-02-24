@@ -46,7 +46,7 @@ public class UserService {
 
         userToUpdate.setName(request.getName());
         userToUpdate.setEmail(request.getEmail());
-        userToUpdate.setPassword(request.getPassword());
+        userToUpdate.setEncodedPassword(request.getEncodedPassword());
 
         User upadtedUser = userRepository.save(userToUpdate);
         return userMapper.toResponse(upadtedUser);

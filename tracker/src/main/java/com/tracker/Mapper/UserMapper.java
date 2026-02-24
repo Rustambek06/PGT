@@ -11,7 +11,7 @@ public class UserMapper {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setEncodedPassword(request.getEncodedPassword());
 
         return user;
     }
@@ -19,6 +19,7 @@ public class UserMapper {
         UserResponse response = new UserResponse();
         response.setId(user.getId());
         response.setName(user.getName());
+        response.setRole(user.getRole());
     
         return response;
     }

@@ -14,14 +14,18 @@ public class User {
     private Long id;
     
     private String name;
+
+    @Column(unique = true)
     private String email;
-    private String password;
+
+    private String role = "USER";
+    private String encodedPassword;
     
     public User() {}
 
-    public User (String name, String email, String password) {
+    public User (String name, String email, String encodedPassword) {
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.encodedPassword = encodedPassword;
     }
 }
