@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tracker.DTO.LoginRequest;
 import com.tracker.DTO.UserRequest;
 import com.tracker.DTO.UserResponse;
 import com.tracker.Entity.User;
@@ -28,22 +29,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public UserResponse register(@Valid @RequestBody UserRequest request) {
-        User user = userMapper.toEntity(request);
-        user.setRole("USER");
-        return userMapper.toResponse(user);
+    public UserResponse register(@Valid @RequestBody LoginRequest request) {
+        return null;
     }
 
     @PostMapping("/login")
     public UserResponse login(@Valid @RequestBody String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user.getEncodedPassword().equals(password)) {
-            return userMapper.toResponse(user);
-            // Need to finish
-            // generate token
-        }
-        // Need to finish
-        // return user not found
-        return userMapper.toResponse(user);
+        return null;
     }
 }

@@ -30,7 +30,7 @@ public class NoteService {
 
     public Page<NoteResponse> getAll(Pageable pageable) {
         Page<Note> notes = noteRepository.findAll(pageable);
-
+        // findAllByUserId
         return notes.map(noteMapper::toResponse);
     }
 

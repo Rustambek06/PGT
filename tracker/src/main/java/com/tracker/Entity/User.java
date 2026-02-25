@@ -18,7 +18,10 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+    
     private String encodedPassword;
     
     public User() {}
