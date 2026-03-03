@@ -19,8 +19,8 @@ public class UserController {
     }
 
     @GetMapping
-    public Page<UserResponse> getAll(Pageable pageable) {
-        return userService.getAll(pageable);
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        return userService.getAllUsers(pageable);
     }
 
     @PostMapping

@@ -22,8 +22,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public Page<CategoryResponse> getAll(Pageable pageable) {
-        return categoryService.getAll(pageable);
+    public Page<CategoryResponse> getAllByUserId(Long userId, Pageable pageable) {
+        return categoryService.getAllByUserId(userId, pageable);
     }
 
     @GetMapping("/api/categories/{id}/notes")

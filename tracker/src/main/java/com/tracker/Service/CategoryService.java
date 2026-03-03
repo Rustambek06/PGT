@@ -50,8 +50,8 @@ public class CategoryService {
         this.taskMapper = taskMapper;
     }
 
-    public Page<CategoryResponse> getAll(Pageable pageable) {
-        Page<Category> categories = categoryRepository.findAll(pageable);
+    public Page<CategoryResponse> getAllByUserId(Long userId, Pageable pageable) {
+        Page<Category> categories = categoryRepository.findAllByUserId(userId, pageable);
 
         return categories.map(categoryMapper::toResponse);
     }

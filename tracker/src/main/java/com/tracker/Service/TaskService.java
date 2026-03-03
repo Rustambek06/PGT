@@ -32,8 +32,8 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
-    public Page<TaskResponse> getAll(Pageable pageable) {
-        Page<Task> tasks = taskRepository.findAll(pageable);
+    public Page<TaskResponse> getAllByUserId(Long userId, Pageable pageable) {
+        Page<Task> tasks = taskRepository.findAllByUserId(userId, pageable);
 
         return tasks.map(taskMapper::toResponse);
     }

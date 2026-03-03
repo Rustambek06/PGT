@@ -1,8 +1,11 @@
 package com.tracker.Repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.tracker.Entity.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     boolean existsByIdAndUserId(Long categoryId, Long UserId);
+    Page<Category> findAllByUserId(Long userId, Pageable pageable);
 }

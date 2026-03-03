@@ -28,9 +28,8 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public Page<NoteResponse> getAll(Pageable pageable) {
-        Page<Note> notes = noteRepository.findAll(pageable);
-        // findAllByUserId
+    public Page<NoteResponse> getAllByUserId(Long userId, Pageable pageable) {
+        Page<Note> notes = noteRepository.findAllByUserId(userId, pageable);
         return notes.map(noteMapper::toResponse);
     }
 

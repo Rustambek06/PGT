@@ -27,7 +27,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public Page<UserResponse> getAll(Pageable pageable) {
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
         Page<User> users = userRepository.findAll(pageable);
 
         return users.map(userMapper::toResponse);

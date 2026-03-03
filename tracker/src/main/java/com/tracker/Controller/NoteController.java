@@ -19,8 +19,8 @@ public class NoteController {
     }
 
     @GetMapping
-    public Page<NoteResponse> getAll(Pageable pageable) {
-        return noteService.getAll(pageable);
+    public Page<NoteResponse> getAllByUserId(Long userId, Pageable pageable) {
+        return noteService.getAllByUserId(userId, pageable);
     }
 
     @PostMapping

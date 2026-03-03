@@ -19,8 +19,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public Page<TaskResponse> getAll(Pageable pageable) {
-        return taskService.getAll(pageable);
+    public Page<TaskResponse> getAllByUserId(Long userId, Pageable pageable) {
+        return taskService.getAllByUserId(userId, pageable);
     }
 
     @PostMapping
