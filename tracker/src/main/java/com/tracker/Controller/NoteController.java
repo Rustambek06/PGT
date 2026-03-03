@@ -37,7 +37,7 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}") 
-    public void delete(@PathVariable("id") Long id) {
-        noteService.delete(id);
+    public void delete(@PathVariable("id") Long id, Long userId) {
+        noteService.delete(id, userId);
     }
 }

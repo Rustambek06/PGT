@@ -69,8 +69,8 @@ public class TaskService {
         return taskMapper.toResponse(updatedTask);
     }
 
-    public void delete(Long id) {
-        boolean isTaskExist = taskRepository.existsById(id);
+    public void delete(Long id, Long userId) {
+        boolean isTaskExist = taskRepository.existsByIdAndUserId(id, userId);
 
         if (isTaskExist) {
             taskRepository.deleteById(id);

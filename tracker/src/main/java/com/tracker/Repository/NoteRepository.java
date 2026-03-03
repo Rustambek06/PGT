@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface NoteRepository extends JpaRepository<Note, Long>{
     List<Note> findByCategoryIdOrderByCreatedAtDesc(Long categoryId);
     boolean existsByCategoryId(Long categoryId);
-    boolean existsById(Long id);
+    boolean existsByIdAndUserId(Long id, Long userId);
     Page<Note> findAllByUserId(Long userId, Pageable pageable);
 }

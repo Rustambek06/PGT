@@ -61,8 +61,8 @@ public class NoteService {
         return noteMapper.toResponse(updatedNote);
     }
 
-    public void delete(Long id) {
-        boolean isNoteExist = noteRepository.existsById(id);
+    public void delete(Long id, Long userId) {
+        boolean isNoteExist = noteRepository.existsByIdAndUserId(id, userId);
 
         if (isNoteExist) {
             noteRepository.deleteById(id);

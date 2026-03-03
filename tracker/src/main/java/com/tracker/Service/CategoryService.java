@@ -89,8 +89,8 @@ public class CategoryService {
         return categoryMapper.toResponse(updatedCategory);
     }
 
-    public void delete(Long id) {
-        boolean isCategoryExist = categoryRepository.existsById(id);
+    public void delete(Long id, Long userId) {
+        boolean isCategoryExist = categoryRepository.existsByIdAndUserId(id, userId);
 
         if (isCategoryExist) {
             boolean isNotesExist = noteRepository.existsByCategoryId(id);

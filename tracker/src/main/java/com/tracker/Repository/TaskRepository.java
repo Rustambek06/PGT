@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByCategoryIdOrderByCreatedAtDesc(Long categoryId);
     boolean existsByCategoryId(Long categoryId);
-    boolean existsById(Long id);
+    boolean existsByIdAndUserId(Long id, Long userId);
     Page<Task> findAllByUserId(Long userId, Pageable pageable);
 }
