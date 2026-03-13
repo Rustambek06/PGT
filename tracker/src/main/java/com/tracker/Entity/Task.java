@@ -18,7 +18,7 @@ public class Task {
     private String description;
     private String status;
     private String priority;
-    private boolean isCompleated = false;
+    private boolean isCompleted = false;
     private LocalDateTime dueDate;
 
     @ManyToOne

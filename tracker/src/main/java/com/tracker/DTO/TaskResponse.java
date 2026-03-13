@@ -13,7 +13,7 @@ public class TaskResponse {
     private String description;
     private String status;
     private String priority;
-    private boolean isCompleated;
+    private boolean isCompleted;
     private LocalDateTime dueDate;
     private Category category;
     private LocalDateTime createdAt;

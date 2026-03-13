@@ -20,7 +20,7 @@ public class TaskRequest {
     private String priority;
 
     @NotNull(message = "Task status is mandatory")
-    private boolean isCompleated;
+    private boolean isCompleted;
 
     private Long categoryId;
 

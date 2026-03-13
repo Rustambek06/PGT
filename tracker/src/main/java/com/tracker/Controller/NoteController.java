@@ -18,9 +18,17 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+    // @GetMapping
+    // public Page<NoteResponse> getAllByUserId(Long userId, Pageable pageable) {
+    //     return noteService.getAllByUserId(userId, pageable);
+    // }
+
     @GetMapping
-    public Page<NoteResponse> getAllByUserId(Long userId, Pageable pageable) {
-        return noteService.getAllByUserId(userId, pageable);
+    public Page<NoteResponse> getAll(
+        @RequestParam(required = false) Long categoryId,
+        Pageable pageable
+    ) {
+        return noteService.getAll(categoryId, pageable);
     }
 
     @PostMapping

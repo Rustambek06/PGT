@@ -28,8 +28,16 @@ public class NoteService {
         this.noteMapper = noteMapper;
     }
 
-    public Page<NoteResponse> getAllByUserId(Long userId, Pageable pageable) {
-        Page<Note> notes = noteRepository.findAllByUserId(userId, pageable);
+    public Page<NoteResponse> getAll(Long categoryId, Pageable pageable) {
+        Long userId = SecurityUtils.getCurrentUserId();
+        
+        Page<Note> notes;
+        if (categoryId != null) {
+            notes = noteRepository.findAllByUserIdAndCategoryId(categoryId, userId, pageable);
+        } else {
+            notes = noteRepository.findAllByUserId(userId, pageable);
+        }
+        
         return notes.map(noteMapper::toResponse);
     }
 

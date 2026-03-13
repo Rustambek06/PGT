@@ -26,13 +26,14 @@ public class CategoryController {
         return categoryService.getAllByUserId(userId, pageable);
     }
 
-    @GetMapping("/api/categories/{id}/notes")
-    public List<NoteResponse> getNotesByCategory(@PathVariable("id") Long id) {
-        List<NoteResponse> notesByCategory = categoryService.getNotesByCategory(id);
+    @GetMapping("/{id}/notes")
+    public List<NoteResponse> getNotesByCategory(@PathVariable("id") Long categoryId) {
+        List<NoteResponse> notesByCategory = categoryService.getNotesByCategory(categoryId);
+        // Должен добавить IDOR Protection (проверку через userId)
         return notesByCategory;
     }
 
-    @GetMapping("/api/categories/{id}/tasks")
+    @GetMapping("/{id}/tasks")
     public List<TaskResponse> getTasksByCategory(@PathVariable("id") Long id) {
         List<TaskResponse> tasksByCategory = categoryService.getTasksByCategory(id);
         return tasksByCategory;
@@ -43,12 +44,12 @@ public class CategoryController {
         return categoryService.save(request);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/{userId}")
     public CategoryResponse update(
-        @PathVariable("id") Long id,
+        @PathVariable("id") Long id, Long userId,
         @Valid @RequestBody CategoryRequest request
     ) {
-        return categoryService.update(request, id);
+        return categoryService.update(request, id, userId);
     }
 
     @DeleteMapping("/{id}")

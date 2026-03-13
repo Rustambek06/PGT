@@ -78,8 +78,8 @@ public class CategoryService {
         return categoryMapper.toResponse(savedCategory);
     }
 
-    public CategoryResponse update(CategoryRequest request, Long id) {
-        Category categoryToUpdate = categoryRepository.findById(id)
+    public CategoryResponse update(CategoryRequest request, Long id, Long userId) {
+        Category categoryToUpdate = categoryRepository.findByIdAndUserId(id, userId)
             .orElseThrow(() -> new EntityNotFoundException("Category not found"));
         
         categoryToUpdate.setName(request.getName());
@@ -90,6 +90,7 @@ public class CategoryService {
     }
 
     public void delete(Long id, Long userId) {
+        // todo: add @RestControllerAdvice
         boolean isCategoryExist = categoryRepository.existsByIdAndUserId(id, userId);
 
         if (isCategoryExist) {
