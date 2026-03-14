@@ -14,5 +14,5 @@ public class UserRequest {
     private String email;
 
     @NotNull(message = "Password is mandatory")
-    private String encodedPassword;
+    private String password;
 }

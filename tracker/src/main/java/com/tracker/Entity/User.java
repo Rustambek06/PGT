@@ -22,13 +22,23 @@ public class User {
     @Column(name = "role")
     private Role role;
     
+    private Status status;
+    
     private String encodedPassword;
     
     public User() {}
 
-    public User (String name, String email, String encodedPassword) {
+    public User (
+        String name, 
+        String email, 
+        Role role, 
+        Status status,
+        String encodedPassword
+    ) {
         this.name = name;
         this.email = email;
+        this.role = role;
+        this.status = status;
         this.encodedPassword = encodedPassword;
     }
 }
