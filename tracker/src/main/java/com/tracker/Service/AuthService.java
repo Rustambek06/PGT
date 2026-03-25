@@ -3,6 +3,7 @@ package com.tracker.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.tracker.Utils.JwtUtils;
+import com.tracker.DTO.AuthResponse;
 import com.tracker.DTO.LoginRequest;
 import com.tracker.DTO.UserRequest;
 import com.tracker.Entity.Role;
@@ -18,7 +19,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
-    public String login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -26,7 +27,10 @@ public class AuthService {
             throw new RuntimeException("Неверный пароль");
         }
 
-        return jwtUtils.generateToken(user.getEmail(), user.getId());
+        String token = jwtUtils.generateToken(user.getEmail(), user.getId());
+        
+        // Возвращаем объект вместо строки
+        return new AuthResponse(token, user.getName(), user.getId());
     }
 
     public void register(UserRequest request) {

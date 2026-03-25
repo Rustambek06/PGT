@@ -12,6 +12,7 @@ import styles from './Sidebar.module.css';
 const Sidebar: React.FC = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState<string>(() => localStorage.getItem('userName') || '');
   const { isMobile } = useWindowSize();
 
   // Close sidebar when navigating on mobile
@@ -20,6 +21,21 @@ const Sidebar: React.FC = () => {
       setIsOpen(false);
     }
   }, [location.pathname, isMobile]);
+
+  // Sync username with localStorage updates from login/register events
+  useEffect(() => {
+    const updateName = () => {
+      setUserName(localStorage.getItem('userName') || '');
+    };
+
+    updateName();
+    window.addEventListener('storage', updateName);
+    window.addEventListener('userLogin', updateName);
+    return () => {
+      window.removeEventListener('storage', updateName);
+      window.removeEventListener('userLogin', updateName);
+    };
+  }, []);
 
   const sidebarVariants = {
     hidden: {
@@ -106,6 +122,29 @@ const Sidebar: React.FC = () => {
         {/* Logo Section */}
         <div className={styles.logo}>
           <h1>🚀 Tracker</h1>
+        </div>
+
+        {/* User Block */}
+        <div className={styles.userBlock}>
+          <div className={styles.userAvatar} aria-label="User avatar">
+            {userName ? userName[0].toUpperCase() : 'U'}
+          </div>
+          <div className={styles.userDetails}>
+            <p className={styles.userLabel}>Пользователь</p>
+            <p className={styles.userName}>{userName || 'Гость'}</p>
+          </div>
+          {userName && (
+            <button
+              className={styles.logoutBtn}
+              onClick={() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userName');
+                window.location.href = '/login';
+              }}
+            >
+              Выйти
+            </button>
+          )}
         </div>
 
         {/* Navigation */}

@@ -3,30 +3,20 @@
  * Spring Boot приложение на порту 8080
  */
 
-import axios from 'axios';
+import apiService from './apiService';
 import type { Note, Task, NoteRequest, TaskRequest } from '../types';
 
-const API_BASE_URL = 'https://personalgrowthtracker.onrender.com/api';
+const pageSize = 12; // unify paginated fetch size
 
-const axiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// Helper: ensure there is at least one category and return its id
 const getOrCreateDefaultCategory = async (): Promise<number> => {
   try {
-    // fetch first page of categories
-    const resp = await axiosInstance.get('/categories', { params: { page: 0, size: 1 } });
-    const page = resp.data as any;
-    if (page && page.totalElements && page.totalElements > 0 && page.content && page.content.length > 0) {
+    const response = await apiService.getPaginated<any>('/categories', 0, 1);
+    const page = response.data;
+    if (page?.content?.length > 0) {
       return page.content[0].id;
     }
-    // create default category
-    const createResp = await axiosInstance.post('/categories', { name: 'Uncategorized' });
-    return createResp.data.id;
+    const created = await apiService.create<any>('/categories', { name: 'Uncategorized' });
+    return created.data?.id ?? 1;
   } catch (err) {
     console.warn('Could not ensure default category, falling back to 1', err);
     return 1;
@@ -36,80 +26,36 @@ const getOrCreateDefaultCategory = async (): Promise<number> => {
 // ==================== NOTES ====================
 
 export const notesApi = {
-  /**
-   * Получить все заметки с бэкенда
-   */
-  getAll: async (): Promise<Note[]> => {
-    try {
-      const response = await axiosInstance.get<Note[]>('/notes');
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching notes:', error);
-      throw new Error('Failed to fetch notes');
-    }
+  getAll: async (page = 0): Promise<Note[]> => {
+    const response = await apiService.getPaginated<Note>('/notes', page, pageSize, 'createdAt,desc');
+    return response.data.content;
   },
 
-  /**
-   * Получить заметку по ID
-   */
   getById: async (id: number): Promise<Note> => {
-    try {
-      const response = await axiosInstance.get<Note>(`/notes/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching note ${id}:`, error);
-      throw new Error(`Failed to fetch note with id ${id}`);
-    }
+    const response = await apiService.getById<Note>('/notes', id);
+    return response.data;
   },
 
-  /**
-   * Создать новую заметку
-   */
   create: async (note: NoteRequest): Promise<Note> => {
-    try {
-      // ensure categoryId exists on backend
-      if (!note.categoryId) {
-        note.categoryId = await getOrCreateDefaultCategory();
-      }
-      const response = await axiosInstance.post<Note>('/notes', note);
-      return response.data;
-    } catch (error) {
-      console.error('Error creating note:', error);
-      throw new Error('Failed to create note');
+    if (!note.categoryId) {
+      note.categoryId = await getOrCreateDefaultCategory();
     }
+    const response = await apiService.create<Note>('/notes', note);
+    return response.data;
   },
 
-  /**
-   * Обновить заметку
-   */
   update: async (id: number, note: NoteRequest): Promise<Note> => {
-    try {
-      if (!note.categoryId) {
-        note.categoryId = await getOrCreateDefaultCategory();
-      }
-      const response = await axiosInstance.put<Note>(`/notes/${id}`, note);
-      return response.data;
-    } catch (error) {
-      console.error(`Error updating note ${id}:`, error);
-      throw new Error('Failed to update note');
+    if (!note.categoryId) {
+      note.categoryId = await getOrCreateDefaultCategory();
     }
+    const response = await apiService.update<Note>('/notes', id, note);
+    return response.data;
   },
 
-  /**
-   * Удалить заметку
-   */
   delete: async (id: number): Promise<void> => {
-    try {
-      await axiosInstance.delete(`/notes/${id}`);
-    } catch (error) {
-      console.error(`Error deleting note ${id}:`, error);
-      throw new Error('Failed to delete note');
-    }
+    await apiService.delete('/notes', id);
   },
 
-  /**
-   * Фильтровать заметки по дате (на клиенте, так как API не поддерживает query параметры)
-   */
   filterByDateRange: async (startDate: Date, endDate: Date): Promise<Note[]> => {
     const allNotes = await notesApi.getAll();
     return allNotes.filter((note) => {
@@ -125,83 +71,42 @@ export const tasksApi = {
   /**
    * Получить все задачи с бэкенда
    */
-  getAll: async (): Promise<Task[]> => {
-    try {
-      const response = await axiosInstance.get<Task[]>('/tasks');
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-      throw new Error('Failed to fetch tasks');
-    }
+  getAll: async (page = 0): Promise<Task[]> => {
+    const response = await apiService.getPaginated<Task>('/tasks', page, pageSize, 'dueDate,asc');
+    return response.data.content;
   },
 
-  /**
-   * Получить задачу по ID
-   */
   getById: async (id: number): Promise<Task> => {
-    try {
-      const response = await axiosInstance.get<Task>(`/tasks/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Error fetching task ${id}:`, error);
-      throw new Error(`Failed to fetch task with id ${id}`);
-    }
+    const response = await apiService.getById<Task>('/tasks', id);
+    return response.data;
   },
 
-  /**
-   * Создать новую задачу
-   */
   create: async (task: TaskRequest): Promise<Task> => {
-    try {
-      if (!task.categoryId) {
-        task.categoryId = await getOrCreateDefaultCategory();
-      }
-      // ensure dueDate is a full LocalDateTime string if only date provided
-      if (task.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) {
-        task.dueDate = `${task.dueDate}T00:00:00`;
-      }
-      const response = await axiosInstance.post<Task>('/tasks', task);
-      return response.data;
-    } catch (error) {
-      console.error('Error creating task:', error);
-      throw new Error('Failed to create task');
+    if (!task.categoryId) {
+      task.categoryId = await getOrCreateDefaultCategory();
     }
+    if (task.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) {
+      task.dueDate = `${task.dueDate}T00:00:00`;
+    }
+    const response = await apiService.create<Task>('/tasks', task);
+    return response.data;
   },
 
-  /**
-   * Обновить задачу
-   */
   update: async (id: number, task: TaskRequest): Promise<Task> => {
-    try {
-      if (!task.categoryId) {
-        task.categoryId = await getOrCreateDefaultCategory();
-      }
-      if (task.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) {
-        task.dueDate = `${task.dueDate}T00:00:00`;
-      }
-      const response = await axiosInstance.put<Task>(`/tasks/${id}`, task);
-      return response.data;
-    } catch (error) {
-      console.error(`Error updating task ${id}:`, error);
-      throw new Error('Failed to update task');
+    if (!task.categoryId) {
+      task.categoryId = await getOrCreateDefaultCategory();
     }
+    if (task.dueDate && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) {
+      task.dueDate = `${task.dueDate}T00:00:00`;
+    }
+    const response = await apiService.update<Task>('/tasks', id, task);
+    return response.data;
   },
 
-  /**
-   * Удалить задачу
-   */
   delete: async (id: number): Promise<void> => {
-    try {
-      await axiosInstance.delete(`/tasks/${id}`);
-    } catch (error) {
-      console.error(`Error deleting task ${id}:`, error);
-      throw new Error('Failed to delete task');
-    }
+    await apiService.delete('/tasks', id);
   },
 
-  /**
-   * Фильтровать задачи по дате выполнения (на клиенте)
-   */
   filterByDateRange: async (startDate: Date, endDate: Date): Promise<Task[]> => {
     const allTasks = await tasksApi.getAll();
     return allTasks.filter((task) => {
@@ -210,9 +115,6 @@ export const tasksApi = {
     });
   },
 
-  /**
-   * Фильтровать задачи по статусу
-   */
   filterByStatus: async (status: string): Promise<Task[]> => {
     const allTasks = await tasksApi.getAll();
     return allTasks.filter((task) => task.status === status);

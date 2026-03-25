@@ -35,6 +35,67 @@
   letter-spacing: -0.5px;
 }
 
+.userBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  background: rgba(255, 165, 0, 0.04);
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ffa500, #ff8c00);
+  border: 1px solid rgba(255, 215, 0, 0.45);
+}
+
+.userDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.userLabel {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  line-height: 1.1;
+}
+
+.userName {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logoutBtn {
+  border: 1px solid rgba(255, 165, 0, 0.4);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.logoutBtn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
 .nav {
   display: flex;
   flex-direction: column;

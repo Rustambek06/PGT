@@ -42,6 +42,13 @@ export interface CalendarState {
   selectedDate: Date;
 }
 
+// Auth response
+export interface AuthResponse {
+  token: string;
+  name: string;
+  id: number;
+}
+
 // Delete Confirmation
 export interface DeleteConfirmation {
   isOpen: boolean;

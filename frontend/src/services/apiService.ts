@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
-import { PageResponse } from '../types';
+import { PageResponse, AuthResponse } from '../types';
 
-const API_BASE = 'https://personalgrowthtracker.onrender.com/api';
+const API_BASE = 'http://localhost:8080';
 
 const instance: AxiosInstance = axios.create({
   baseURL: API_BASE,
@@ -13,12 +13,12 @@ const instance: AxiosInstance = axios.create({
 // Ensure default category exists and return its id
 const getOrCreateDefaultCategory = async (): Promise<number> => {
   try {
-    const resp = await instance.get('/categories', { params: { page: 0, size: 1 } });
+    const resp = await instance.get('/api/categories', { params: { page: 0, size: 1 } });
     const page = resp.data as any;
     if (page && page.totalElements > 0 && page.content && page.content.length > 0) {
       return page.content[0].id;
     }
-    const createResp = await instance.post('/categories', { name: 'Uncategorized' });
+    const createResp = await instance.post('/api/categories', { name: 'Uncategorized' });
     return createResp.data.id;
   } catch (err) {
     console.warn('Failed to ensure default category, falling back to id=1', err);
@@ -29,9 +29,17 @@ const getOrCreateDefaultCategory = async (): Promise<number> => {
 // Add request interceptor
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const requestUrl = config.url || '';
+    const isAuthRoute = requestUrl.startsWith('/auth') || requestUrl.startsWith('auth');
+    if (!isAuthRoute) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        if (config.headers) {
+          (config.headers as Record<string, string>)['Authorization'] = `Bearer ${token}`;
+        } else {
+          config.headers = { Authorization: `Bearer ${token}` } as any;
+        }
+      }
     }
     return config;
   },
@@ -42,10 +50,16 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    if (status === 401) {
+      // Token expired or invalid - logout
+      localStorage.removeItem('token');
       localStorage.removeItem('authToken');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userId');
       window.location.href = '/login';
     }
+    // For 403 Forbidden, don't logout - just reject the error
     return Promise.reject(error);
   }
 );
@@ -64,13 +78,41 @@ export const apiService = {
     if (sort) params.append('sort', sort);
     
     return instance.get<PageResponse<T>>(
-      `${endpoint}?${params.toString()}`
+      `/api${endpoint}?${params.toString()}`
     );
   },
 
   // GET single item
   getById: <T>(endpoint: string, id: number) => {
-    return instance.get<T>(`${endpoint}/${id}`);
+    return instance.get<T>(`/api${endpoint}/${id}`);
+  },
+
+  // Auth endpoints
+  getUserName: () => {
+    return localStorage.getItem('userName') || '';
+  },
+
+  setUserName: (name: string) => {
+    localStorage.setItem('userName', name);
+  },
+
+  register: (name: string, email: string, password: string) => {
+    return instance.post('/auth/register', { name, email, password });
+  },
+
+  login: async (email: string, password: string) => {
+    const response = await instance.post<AuthResponse>('/auth/login', { email, password });
+    const { token, name, id } = response.data;
+    localStorage.setItem('token', token);
+    localStorage.setItem('userName', name);
+    localStorage.setItem('userId', id.toString());
+    return { token, name, id };
+  },
+
+  logout: () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    window.location.href = '/login';
   },
 
   // POST create
@@ -91,7 +133,7 @@ export const apiService = {
           normalized.dueDate = `${normalized.dueDate}T00:00:00`;
         }
       }
-      return instance.post<T>(endpoint, normalized);
+      return instance.post<T>(`/api${endpoint}`, normalized);
     };
 
     return prepare();
@@ -114,7 +156,7 @@ export const apiService = {
           normalized.dueDate = `${normalized.dueDate}T00:00:00`;
         }
       }
-      return instance.put<T>(`${endpoint}/${id}`, normalized);
+      return instance.put<T>(`/api${endpoint}/${id}`, normalized);
     };
 
     return prepare();
@@ -122,17 +164,17 @@ export const apiService = {
 
   // DELETE
   delete: (endpoint: string, id: number) => {
-    return instance.delete(`${endpoint}/${id}`);
+    return instance.delete(`/api${endpoint}/${id}`);
   },
 
   // GET all (without pagination)
   getAll: <T>(endpoint: string) => {
-    return instance.get<T[]>(endpoint);
+    return instance.get<T[]>(`/api${endpoint}`);
   },
 
   // Search with query
   search: <T>(endpoint: string, query: string, page: number = 0, size: number = 12) => {
-    return instance.get<PageResponse<T>>(endpoint, {
+    return instance.get<PageResponse<T>>(`/api${endpoint}`, {
       params: { q: query, page, size },
     });
   },

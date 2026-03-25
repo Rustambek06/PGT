@@ -1,11 +1,13 @@
 package com.tracker.Controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tracker.DTO.AuthResponse;
 import com.tracker.DTO.LoginRequest;
 import com.tracker.DTO.UserRequest;
 import com.tracker.DTO.UserResponse;
@@ -18,7 +20,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3001")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     
     private final AuthService authService;
@@ -45,9 +47,9 @@ public class AuthController {
     public void register(@Valid @RequestBody UserRequest request) {
         authService.register(request);
     }
-
+    
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest request) {
-        return authService.login(request); // Возвращаем токен строкой
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }
