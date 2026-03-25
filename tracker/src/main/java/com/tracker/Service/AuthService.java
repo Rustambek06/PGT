@@ -1,17 +1,13 @@
 package com.tracker.Service;
 
-import javax.management.RuntimeErrorException;
-
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.tracker.Utils.JwtUtils;
 import com.tracker.DTO.LoginRequest;
 import com.tracker.DTO.UserRequest;
 import com.tracker.Entity.Role;
 import com.tracker.Entity.User;
 import com.tracker.Repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service

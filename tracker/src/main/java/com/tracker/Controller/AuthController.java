@@ -12,6 +12,7 @@ import com.tracker.DTO.UserResponse;
 import com.tracker.Entity.User;
 import com.tracker.Mapper.UserMapper;
 import com.tracker.Repository.UserRepository;
+import com.tracker.Service.AuthService;
 
 import jakarta.validation.Valid;
 
@@ -20,21 +21,33 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "http://localhost:3001")
 public class AuthController {
     
+    private final AuthService authService;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public AuthController(UserRepository userRepository, UserMapper userMapper) {
+    public AuthController(AuthService authService, UserRepository userRepository, UserMapper userMapper) {
+        this.authService = authService;
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
 
+    // @PostMapping("/register")
+    // public UserResponse register(@Valid @RequestBody LoginRequest request) {
+    //     return null;
+    // }
+
+    // @PostMapping("/login")
+    // public UserResponse login(@Valid @RequestBody String email, String password) {
+    //     return null;
+    // }
+
     @PostMapping("/register")
-    public UserResponse register(@Valid @RequestBody LoginRequest request) {
-        return null;
+    public void register(@Valid @RequestBody UserRequest request) {
+        authService.register(request);
     }
 
     @PostMapping("/login")
-    public UserResponse login(@Valid @RequestBody String email, String password) {
-        return null;
+    public String login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request); // Возвращаем токен строкой
     }
 }

@@ -8,6 +8,7 @@ import com.tracker.Repository.NoteRepository;
 import com.tracker.Mapper.NoteMapper;
 import com.tracker.DTO.NoteRequest;
 import com.tracker.DTO.NoteResponse;
+import com.tracker.Utils.SecurityUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
