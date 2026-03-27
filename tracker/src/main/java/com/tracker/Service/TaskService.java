@@ -2,12 +2,14 @@ package com.tracker.Service;
 
 import com.tracker.Entity.Category;
 import com.tracker.Entity.Task;
+import com.tracker.Entity.User;
 import com.tracker.Exceptions.TaskNotFoundException;
 import com.tracker.DTO.TaskResponse;
 import com.tracker.DTO.TaskRequest;
 import com.tracker.Mapper.TaskMapper;
 import com.tracker.Repository.CategoryRepository;
 import com.tracker.Repository.TaskRepository;
+import com.tracker.Repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -20,15 +22,18 @@ import org.springframework.stereotype.Service;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final TaskMapper taskMapper;
 
     public TaskService(
         TaskRepository taskRepository,
         CategoryRepository categoryRepository,
+        UserRepository userRepository,
         TaskMapper taskMapper
     ) {
         this.taskRepository = taskRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
         this.taskMapper = taskMapper;
     }
 
@@ -38,12 +43,16 @@ public class TaskService {
         return tasks.map(taskMapper::toResponse);
     }
 
-    public TaskResponse save(TaskRequest request) {
+    public TaskResponse save(TaskRequest request, Long userId) {
         Task taskToSave = taskMapper.toEntity(request);
 
         Category category = categoryRepository.findById(request.getCategoryId())
             .orElseThrow(() -> new EntityNotFoundException("Category not found"));
         taskToSave.setCategory(category);
+        
+        User user = userRepository.findById(userId)
+        .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        taskToSave.setUser(user);
         
         Task savedTask = taskRepository.save(taskToSave);
 

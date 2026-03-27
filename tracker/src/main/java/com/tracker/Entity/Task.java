@@ -18,6 +18,8 @@ public class Task {
     private String description;
     private String status;
     private String priority;
+    
+    @Column(name = "is_completed")
     private boolean isCompleted = false;
     private LocalDateTime dueDate;
 
