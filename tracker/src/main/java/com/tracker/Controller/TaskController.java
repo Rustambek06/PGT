@@ -24,24 +24,26 @@ public class TaskController {
 
     @GetMapping
     public Page<TaskResponse> getAllByUserId(
-        //@AuthenticationPrincipal User user, 
+        @AuthenticationPrincipal CustomUserDetails userDetails, 
         Pageable pageable
     ) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = userDetails.getId();
-        System.out.println("DEBUG: Requesting tasks for userId: " + userId);
-        return taskService.getAllByUserId(userId, pageable);
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        //Long userId = userDetails.getId();
+        //System.out.println("DEBUG: Requesting tasks for userId: " + userId);
+        return taskService.getAllByUserId(userDetails.getId(), pageable);
     }
 
     @PostMapping
-    public TaskResponse create(@Valid @RequestBody TaskRequest request) {
+    public TaskResponse create(@Valid @RequestBody TaskRequest request,
+                               @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = userDetails.getId();
+        //  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        //  CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        //  Long userId = userDetails.getId();
 
-        return taskService.save(request, userId);
+        return taskService.save(request, userDetails.getId());
     }
 
     @PutMapping("/{id}")
@@ -53,7 +55,10 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id, Long userId) {
-        taskService.delete(id, userId);
+    public void delete(
+        @PathVariable("id") Long id, 
+        @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        taskService.delete(id, userDetails.getId());
     }
 }
