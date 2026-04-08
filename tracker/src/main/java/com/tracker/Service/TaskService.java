@@ -44,7 +44,6 @@ public class TaskService {
     }
 
     public TaskResponse save(TaskRequest request, Long userId) {
-        System.out.println("DEBUG: Starting to save task for user: " + userId);
         Task taskToSave = taskMapper.toEntity(request);
 
         Category category = categoryRepository.findById(request.getCategoryId())
@@ -56,7 +55,6 @@ public class TaskService {
         taskToSave.setUser(user);
         
         Task savedTask = taskRepository.save(taskToSave);
-        System.out.println("DEBUG: Task saved with ID: " + savedTask.getId());
         return taskMapper.toResponse(savedTask);
     }
 

@@ -2,9 +2,11 @@ package com.tracker.Service;
 
 import com.tracker.Entity.Category;
 import com.tracker.Entity.Note;
+import com.tracker.Entity.User;
 import com.tracker.Exceptions.NoteNotFoundException;
 import com.tracker.Repository.CategoryRepository;
 import com.tracker.Repository.NoteRepository;
+import com.tracker.Repository.UserRepository;
 import com.tracker.Mapper.NoteMapper;
 import com.tracker.DTO.NoteRequest;
 import com.tracker.DTO.NoteResponse;
@@ -21,20 +23,27 @@ import org.springframework.stereotype.Service;
 public class NoteService {
     private final NoteRepository noteRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final NoteMapper noteMapper;
 
-    public NoteService(NoteRepository noteRepository, CategoryRepository categoryRepository, NoteMapper noteMapper) {
+    public NoteService(
+        NoteRepository noteRepository, 
+        CategoryRepository categoryRepository, 
+        UserRepository userRepository,
+        NoteMapper noteMapper
+    ) {
         this.noteRepository = noteRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
         this.noteMapper = noteMapper;
     }
 
-    public Page<NoteResponse> getAll(Long categoryId, Pageable pageable) {
-        Long userId = SecurityUtils.getCurrentUserId();
+    public Page<NoteResponse> getAllByUserId(Long userId, Long categoryId, Pageable pageable) {
+        // Long userId = SecurityUtils.getCurrentUserId();
         
         Page<Note> notes;
         if (categoryId != null) {
-            notes = noteRepository.findAllByUserIdAndCategoryId(categoryId, userId, pageable);
+            notes = noteRepository.findAllByUserIdAndCategoryId(userId, categoryId, pageable);
         } else {
             notes = noteRepository.findAllByUserId(userId, pageable);
         }
@@ -42,15 +51,18 @@ public class NoteService {
         return notes.map(noteMapper::toResponse);
     }
 
-    public NoteResponse save(NoteRequest request) {
+    public NoteResponse save(Long userId, NoteRequest request) {
         Note noteToSave = noteMapper.toEntity(request);
         
         Category category = categoryRepository.findById(request.getCategoryId())
             .orElseThrow(() -> new EntityNotFoundException("Category not found."));
         noteToSave.setCategory(category);
 
-        Note savedNote = noteRepository.save(noteToSave);
+        User user = userRepository.findById(userId)
+        .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        noteToSave.setUser(user);
 
+        Note savedNote = noteRepository.save(noteToSave);
         return noteMapper.toResponse(savedNote);
     }
 
@@ -70,7 +82,7 @@ public class NoteService {
         return noteMapper.toResponse(updatedNote);
     }
 
-    public void delete(Long id, Long userId) {
+    public void delete(Long userId, Long id) {
         boolean isNoteExist = noteRepository.existsByIdAndUserId(id, userId);
 
         if (isNoteExist) {

@@ -20,7 +20,7 @@ public class Note {
     @ManyToOne
     private Category category;
     
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     private LocalDateTime createdAt = LocalDateTime.now();

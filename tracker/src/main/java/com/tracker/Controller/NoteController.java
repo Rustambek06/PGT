@@ -2,10 +2,12 @@ package com.tracker.Controller;
 
 import com.tracker.DTO.NoteResponse;
 import com.tracker.DTO.NoteRequest;
+import com.tracker.Service.CustomUserDetails;
 import com.tracker.Service.NoteService;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,15 +27,19 @@ public class NoteController {
 
     @GetMapping
     public Page<NoteResponse> getAll(
+        @AuthenticationPrincipal CustomUserDetails userDetails,
         @RequestParam(required = false) Long categoryId,
         Pageable pageable
     ) {
-        return noteService.getAll(categoryId, pageable);
+        return noteService.getAllByUserId(userDetails.getId(), categoryId, pageable);
     }
 
     @PostMapping
-    public NoteResponse create(@Valid @RequestBody NoteRequest request) {
-        return noteService.save(request);
+    public NoteResponse create(
+        @AuthenticationPrincipal CustomUserDetails userDetails,
+        @Valid @RequestBody NoteRequest request
+    ) {
+        return noteService.save(userDetails.getId(), request);
     }
 
     @PutMapping("/{id}")
@@ -45,7 +51,10 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}") 
-    public void delete(@PathVariable("id") Long id, Long userId) {
-        noteService.delete(id, userId);
+    public void delete(
+        @PathVariable("id") Long id, 
+        @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
+        noteService.delete(userDetails.getId(), id);
     }
 }
