@@ -44,10 +44,12 @@ public class NoteController {
 
     @PutMapping("/{id}")
     public NoteResponse update( 
-        @PathVariable("id") Long id,
+        @AuthenticationPrincipal CustomUserDetails userDetails,
+        @PathVariable("id") Long taskId,
         @Valid @RequestBody NoteRequest request
     ) {
-        return noteService.update(request, id);
+        Long userId = userDetails.getId();
+        return noteService.update(userId, taskId, request);
     }
 
     @DeleteMapping("/{id}") 

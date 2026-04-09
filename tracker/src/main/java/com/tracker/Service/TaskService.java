@@ -15,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 import org.springframework.data.domain.*;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,7 +44,7 @@ public class TaskService {
         return tasks.map(taskMapper::toResponse);
     }
 
-    public TaskResponse save(TaskRequest request, Long userId) {
+    public TaskResponse save(Long userId, TaskRequest request) {
         Task taskToSave = taskMapper.toEntity(request);
 
         Category category = categoryRepository.findById(request.getCategoryId())
@@ -58,12 +59,12 @@ public class TaskService {
         return taskMapper.toResponse(savedTask);
     }
 
-    public TaskResponse update(TaskRequest request, Long id) {
-        Task taskToUpdate = taskRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Task not found"));
+    public TaskResponse update(Long userId, Long taskId, TaskRequest request) {
+        Task taskToUpdate = taskRepository.findByIdAndUserId(taskId, userId)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
         Category category = categoryRepository.findById(request.getCategoryId())
             .orElseThrow(() -> new EntityNotFoundException("Category not found"));
-        
+
         taskToUpdate.setTask(request.getTask());
         taskToUpdate.setDescription(request.getDescription());
         taskToUpdate.setStatus(request.getStatus());
@@ -77,11 +78,11 @@ public class TaskService {
         return taskMapper.toResponse(updatedTask);
     }
 
-    public void delete(Long id, Long userId) {
-        boolean isTaskExist = taskRepository.existsByIdAndUserId(id, userId);
+    public void delete(Long userId, Long taskId) {
+        boolean isTaskExist = taskRepository.existsByIdAndUserId(taskId, userId);
 
         if (isTaskExist) {
-            taskRepository.deleteById(id);
+            taskRepository.deleteById(taskId);
         } else {
             String message = "Task not found";
             throw new TaskNotFoundException(message);
