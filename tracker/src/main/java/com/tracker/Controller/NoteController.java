@@ -31,7 +31,9 @@ public class NoteController {
         @RequestParam(required = false) Long categoryId,
         Pageable pageable
     ) {
-        return noteService.getAllByUserId(userDetails.getId(), categoryId, pageable);
+        Long userId = userDetails.getId();
+
+        return noteService.getAllByUserId(userId, categoryId, pageable);
     }
 
     @PostMapping
@@ -39,7 +41,9 @@ public class NoteController {
         @AuthenticationPrincipal CustomUserDetails userDetails,
         @Valid @RequestBody NoteRequest request
     ) {
-        return noteService.save(userDetails.getId(), request);
+        Long userId = userDetails.getId();
+
+        return noteService.save(userId, request);
     }
 
     @PutMapping("/{id}")
@@ -49,14 +53,17 @@ public class NoteController {
         @Valid @RequestBody NoteRequest request
     ) {
         Long userId = userDetails.getId();
+
         return noteService.update(userId, taskId, request);
     }
 
     @DeleteMapping("/{id}") 
     public void delete(
-        @PathVariable("id") Long id, 
-        @AuthenticationPrincipal CustomUserDetails userDetails
+        @AuthenticationPrincipal CustomUserDetails userDetails,
+        @PathVariable("id") Long id 
     ) {
-        noteService.delete(userDetails.getId(), id);
+        Long userId = userDetails.getId();
+
+        noteService.delete(userId, id);
     }
 }

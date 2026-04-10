@@ -39,8 +39,6 @@ public class NoteService {
     }
 
     public Page<NoteResponse> getAllByUserId(Long userId, Long categoryId, Pageable pageable) {
-        // Long userId = SecurityUtils.getCurrentUserId();
-        
         Page<Note> notes;
         if (categoryId != null) {
             notes = noteRepository.findAllByUserIdAndCategoryId(userId, categoryId, pageable);
@@ -66,8 +64,8 @@ public class NoteService {
         return noteMapper.toResponse(savedNote);
     }
 
-    public NoteResponse update(NoteRequest request, Long id) {
-        Note noteToUpdate = noteRepository.findById(id)
+    public NoteResponse update(Long userId, Long noteId, NoteRequest request) {
+        Note noteToUpdate = noteRepository.findByIdAndUserId(noteId, userId)
             .orElseThrow(() -> new EntityNotFoundException("Note not found"));
 
         noteToUpdate.setTitle(request.getTitle());
@@ -82,11 +80,11 @@ public class NoteService {
         return noteMapper.toResponse(updatedNote);
     }
 
-    public void delete(Long userId, Long id) {
-        boolean isNoteExist = noteRepository.existsByIdAndUserId(id, userId);
+    public void delete(Long userId, Long noteId) {
+        boolean isNoteExist = noteRepository.existsByIdAndUserId(noteId, userId);
 
         if (isNoteExist) {
-            noteRepository.deleteById(id);
+            noteRepository.deleteById(noteId);
         } else {
             String message = "Note not found";
             throw new NoteNotFoundException(message);
