@@ -16,7 +16,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     public Category() {}

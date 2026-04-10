@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoteRepository extends JpaRepository<Note, Long>{
-    List<Note> findByCategoryIdOrderByCreatedAtDesc(Long categoryId);
+    List<Note> findByCategoryIdAndUserIdOrderByCreatedAtDesc(Long categoryId, Long userId);
     boolean existsByCategoryId(Long categoryId);
     boolean existsByIdAndUserId(Long id, Long userId);
     Page<Note> findAllByUserIdAndCategoryId(Long categoryId, Long userId, Pageable pageable);

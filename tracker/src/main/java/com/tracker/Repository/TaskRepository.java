@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> findByCategoryIdOrderByCreatedAtDesc(Long categoryId);
+    List<Task> findByCategoryIdAndUserIdOrderByCreatedAtDesc(Long userId, Long categoryId);
     boolean existsByCategoryId(Long categoryId);
     boolean existsByIdAndUserId(Long id, Long userId);
     Page<Task> findAllByUserId(Long userId, Pageable pageable);

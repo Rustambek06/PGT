@@ -13,9 +13,12 @@ import com.tracker.Repository.NoteRepository;
 import com.tracker.DTO.NoteResponse;
 import com.tracker.Mapper.NoteMapper;
 import com.tracker.Entity.Task;
+import com.tracker.Entity.User;
 import com.tracker.Exceptions.CategoryInUseException;
 import com.tracker.Exceptions.CategoryNotFoundException;
+import com.tracker.Exceptions.UserNotFoundException;
 import com.tracker.Repository.TaskRepository;
+import com.tracker.Repository.UserRepository;
 import com.tracker.DTO.TaskResponse;
 import com.tracker.Mapper.TaskMapper;
 
@@ -33,6 +36,7 @@ public class CategoryService {
     private final NoteMapper noteMapper;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+    private final UserRepository userRepository;
 
     public CategoryService(
         CategoryRepository categoryRepository,
@@ -40,7 +44,8 @@ public class CategoryService {
         NoteRepository noteRepository,
         NoteMapper noteMapper,
         TaskRepository taskRepository,
-        TaskMapper taskMapper
+        TaskMapper taskMapper,
+        UserRepository userRepository
     ) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
@@ -48,6 +53,7 @@ public class CategoryService {
         this.noteMapper = noteMapper;
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.userRepository = userRepository;
     }
 
     public Page<CategoryResponse> getAllByUserId(Long userId, Pageable pageable) {
@@ -56,40 +62,44 @@ public class CategoryService {
         return categories.map(categoryMapper::toResponse);
     }
 
-    public List<NoteResponse> getNotesByCategory(Long categoryId) {
-        List<Note> notesByCategory = noteRepository.findByCategoryIdOrderByCreatedAtDesc(categoryId);
+    public List<NoteResponse> getNotesByCategoryAndUserId(Long userId, Long categoryId) {
+        List<Note> notesByCategory = noteRepository.findByCategoryIdAndUserIdOrderByCreatedAtDesc(categoryId, userId);
         return notesByCategory.stream()
                 .map(noteMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<TaskResponse> getTasksByCategory(Long categoryId) {
-        List<Task> taskByCategory = taskRepository.findByCategoryIdOrderByCreatedAtDesc(categoryId);
+    public List<TaskResponse> getTasksByCategoryAndUserId(Long userId, Long categoryId) {
+        List<Task> taskByCategory = taskRepository.findByCategoryIdAndUserIdOrderByCreatedAtDesc(userId, categoryId);
         return taskByCategory.stream()
                 .map(taskMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public CategoryResponse save(CategoryRequest request) {
+    public CategoryResponse save(Long userId, CategoryRequest request) {
         Category categoryToSave = categoryMapper.toEntity(request);
+
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new UserNotFoundException("User not found!"));
+        categoryToSave.setUser(user);
 
         Category savedCategory = categoryRepository.save(categoryToSave);
 
         return categoryMapper.toResponse(savedCategory);
     }
 
-    public CategoryResponse update(CategoryRequest request, Long id, Long userId) {
-        Category categoryToUpdate = categoryRepository.findByIdAndUserId(id, userId)
+    public CategoryResponse update(Long userId, Long categoryId, CategoryRequest request) {
+        Category categoryToUpdate = categoryRepository.findByIdAndUserId(categoryId, userId)
             .orElseThrow(() -> new EntityNotFoundException("Category not found"));
         
         categoryToUpdate.setName(request.getName());
-
+        
         Category updatedCategory = categoryRepository.save(categoryToUpdate);
 
         return categoryMapper.toResponse(updatedCategory);
     }
 
-    public void delete(Long id, Long userId) {
+    public void delete(Long userId, Long id) {
         // todo: add @RestControllerAdvice
         boolean isCategoryExist = categoryRepository.existsByIdAndUserId(id, userId);
 
