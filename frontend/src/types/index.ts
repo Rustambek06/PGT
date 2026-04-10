@@ -49,12 +49,22 @@ export interface AuthResponse {
   id: number;
 }
 
+// Category types
+export interface Category {
+  id: number;
+  name: string;
+}
+
+export interface CategoryRequest {
+  name: string;
+}
+
 // Delete Confirmation
 export interface DeleteConfirmation {
   isOpen: boolean;
   itemId: number | null;
   itemName: string;
-  itemType: 'note' | 'task' | 'user';
+  itemType: 'note' | 'task' | 'user' | 'category';
   onConfirm: () => void;
   onCancel: () => void;
 }

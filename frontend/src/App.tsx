@@ -10,6 +10,7 @@ import NotesPage from './pages/NotesPage';
 import TasksPage from './pages/TasksPage';
 import CalendarPage from './pages/CalendarPage';
 import { UsersPage } from './pages/UsersPage';
+import { CategoriesPage } from './pages/CategoriesPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import './App.css';
@@ -71,6 +72,16 @@ const App: React.FC = () => {
             <ProtectedRoute>
               <MainLayout>
                 <UsersPage />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <CategoriesPage />
               </MainLayout>
             </ProtectedRoute>
           }

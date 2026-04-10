@@ -68,7 +68,7 @@ public class CategoryController {
         return categoryService.save(userId, request);
     }
 
-    @PutMapping("/{id}/{userId}")
+    @PutMapping("/{id}")
     public CategoryResponse update(
         @AuthenticationPrincipal CustomUserDetails userDetails, 
         @PathVariable("id") Long categoryId,

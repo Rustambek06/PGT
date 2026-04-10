@@ -4,7 +4,7 @@ import styles from './DeleteConfirmation.module.css';
 interface DeleteConfirmationProps {
   isOpen: boolean;
   itemName: string;
-  itemType: 'note' | 'task' | 'user';
+  itemType: 'note' | 'task' | 'user' | 'category';
   onConfirm: () => void;
   onCancel: () => void;
   loading?: boolean;
@@ -24,6 +24,7 @@ export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
     note: 'заметку',
     task: 'задачу',
     user: 'пользователя',
+    category: 'категорию',
   }[itemType];
 
   return (
