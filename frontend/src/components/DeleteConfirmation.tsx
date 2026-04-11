@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './DeleteConfirmation.module.css';
 
 interface DeleteConfirmationProps {
@@ -18,14 +19,11 @@ export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
   onCancel,
   loading = false,
 }) => {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
-  const typeLabel = {
-    note: 'заметку',
-    task: 'задачу',
-    user: 'пользователя',
-    category: 'категорию',
-  }[itemType];
+  const typeLabel = t(`modals.deleteConfirmation.${itemType}`);
 
   return (
     <div className={styles.overlay} onClick={onCancel}>
@@ -35,15 +33,15 @@ export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
       >
         <div className={styles.header}>
           <span className={styles.icon}>🗑️</span>
-          <h2 className={styles.title}>Удалить {typeLabel}?</h2>
+          <h2 className={styles.title}>{t('modals.deleteConfirmation.title')} {typeLabel}?</h2>
         </div>
 
         <div className={styles.content}>
           <p className={styles.message}>
-            Вы уверены, что хотите удалить <strong>"{itemName}"</strong>?
+            {t('modals.deleteConfirmation.confirmDelete')} <strong>"{itemName}"</strong>?
           </p>
           <p className={styles.warning}>
-            Это действие невозможно отменить.
+            {t('modals.deleteConfirmation.warning')}
           </p>
         </div>
 
@@ -53,14 +51,14 @@ export const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
             onClick={onCancel}
             disabled={loading}
           >
-            Отмена
+            {t('modals.deleteConfirmation.cancel')}
           </button>
           <button
             className={`${styles.button} ${styles.deleteButton}`}
             onClick={onConfirm}
             disabled={loading}
           >
-            {loading ? 'Удаляю...' : 'Да, удалить'}
+            {loading ? t('modals.deleteConfirmation.deleting') : t('modals.deleteConfirmation.confirm')}
           </button>
         </div>
       </div>

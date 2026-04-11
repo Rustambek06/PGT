@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useUsers } from '../hooks/useUsers';
 import { User } from '../types';
 import { Modal } from '../components/Modal';
@@ -11,6 +12,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import styles from '../pages/Pages.module.css';
 
 export const UsersPage: React.FC = () => {
+  const { t } = useTranslation();
   const {
     data,
     loading,
@@ -94,10 +96,10 @@ export const UsersPage: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>
-          👥 Пользователи ({data.totalElements})
+          👥 {t('pages.usersPage.title')} ({data.totalElements})
         </h1>
         <button className={styles.createButton} onClick={handleCreateClick}>
-          ➕ Создать
+          ➕ {t('common.create')}
         </button>
       </div>
 
@@ -117,7 +119,7 @@ export const UsersPage: React.FC = () => {
 
       {data.content.length === 0 && !loading && (
         <div className={styles.emptyState}>
-          <p>Нет пользователей</p>
+          <p>{t('pages.usersPage.noUsers')}</p>
         </div>
       )}
 
@@ -135,7 +137,7 @@ export const UsersPage: React.FC = () => {
       {/* Create Modal */}
       <Modal
         isOpen={isCreateModalOpen}
-        title="👥 Новый пользователь"
+        title={`👥 ${t('pages.usersPage.newUser')}`}
         onClose={() => setIsCreateModalOpen(false)}
         size="md"
       >
@@ -149,7 +151,7 @@ export const UsersPage: React.FC = () => {
       {/* Edit Modal */}
       <Modal
         isOpen={isEditModalOpen && editingUser !== null}
-        title={`✏️ Редактировать: ${editingUser?.name}`}
+        title={`✏️ ${t('common.edit')}: ${editingUser?.name}`}
         onClose={() => {
           setIsEditModalOpen(false);
           setEditingUser(null);

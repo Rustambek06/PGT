@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './UserForm.module.css';
 import { User, UserRequest } from '../types';
 
@@ -15,6 +16,7 @@ export const UserForm: React.FC<UserFormProps> = ({
   onCancel,
   loading = false,
 }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = React.useState<UserRequest>({
     name: initialData?.name || '',
     email: initialData?.email || '',
@@ -27,15 +29,15 @@ export const UserForm: React.FC<UserFormProps> = ({
     const newErrors: Partial<UserRequest> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = t('forms.userForm.nameRequired');
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('forms.userForm.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = t('forms.userForm.emailRequired');
     }
     if (!formData.password.trim()) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('forms.userForm.passwordRequired');
     }
 
     setErrors(newErrors);
@@ -79,7 +81,7 @@ export const UserForm: React.FC<UserFormProps> = ({
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
         <label htmlFor="name" className={styles.label}>
-          Имя
+          {t('forms.userForm.name')}
         </label>
         <input
           type="text"
@@ -88,7 +90,7 @@ export const UserForm: React.FC<UserFormProps> = ({
           value={formData.name}
           onChange={handleChange}
           className={`${styles.input} ${errors.name ? styles.error : ''}`}
-          placeholder="Введите имя"
+          placeholder={t('forms.userForm.enterName')}
           disabled={isSubmitting || loading}
         />
         {errors.name && <span className={styles.errorText}>{errors.name}</span>}
@@ -96,7 +98,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 
       <div className={styles.formGroup}>
         <label htmlFor="email" className={styles.label}>
-          Email
+          {t('forms.userForm.email')}
         </label>
         <input
           type="email"
@@ -105,7 +107,7 @@ export const UserForm: React.FC<UserFormProps> = ({
           value={formData.email}
           onChange={handleChange}
           className={`${styles.input} ${errors.email ? styles.error : ''}`}
-          placeholder="user@example.com"
+          placeholder={t('forms.userForm.enterEmail')}
           disabled={isSubmitting || loading}
         />
         {errors.email && <span className={styles.errorText}>{errors.email}</span>}
@@ -113,7 +115,7 @@ export const UserForm: React.FC<UserFormProps> = ({
 
       <div className={styles.formGroup}>
         <label htmlFor="password" className={styles.label}>
-          Пароль
+          {t('forms.userForm.password')}
         </label>
         <input
           type="password"
@@ -122,7 +124,7 @@ export const UserForm: React.FC<UserFormProps> = ({
           value={formData.password}
           onChange={handleChange}
           className={`${styles.input} ${errors.password ? styles.error : ''}`}
-          placeholder="Минимум 6 символов"
+          placeholder={t('forms.userForm.enterPassword')}
           disabled={isSubmitting || loading}
         />
         {errors.password && (
@@ -137,14 +139,14 @@ export const UserForm: React.FC<UserFormProps> = ({
           onClick={onCancel}
           disabled={isSubmitting || loading}
         >
-          Отмена
+          {t('forms.userForm.cancel')}
         </button>
         <button
           type="submit"
           className={`${styles.button} ${styles.submitButton}`}
           disabled={isSubmitting || loading}
         >
-          {isSubmitting || loading ? 'Сохранение...' : 'Сохранить'}
+          {isSubmitting || loading ? t('forms.userForm.saving') : t('forms.userForm.save')}
         </button>
       </div>
     </form>

@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useFetchTasks } from '../hooks/useFetchTasks';
 import { Task, TaskRequest } from '../types';
 import TaskCard from '../components/TaskCard';
@@ -17,6 +18,7 @@ import { DeleteConfirmation } from '../components/DeleteConfirmation';
 import styles from './Pages.module.css';
 
 const TasksPage: React.FC = () => {
+  const { t } = useTranslation();
   const {
     data,
     loading,
@@ -117,10 +119,10 @@ const TasksPage: React.FC = () => {
     >
       <div className={styles.header}>
         <h1 className={styles.title}>
-          ✓ Задачи ({data.totalElements})
+          ✓ {t('pages.tasksPage.title')} ({data.totalElements})
         </h1>
         <button className={styles.createButton} onClick={handleCreateClick}>
-          ➕ Создать
+          ➕ {t('common.create')}
         </button>
       </div>
 
@@ -172,7 +174,7 @@ const TasksPage: React.FC = () => {
             </>
           ) : (
             <div className={styles.emptyState}>
-              <p>Нет задач</p>
+              <p>{t('pages.tasksPage.noTasks')}</p>
             </div>
           )}
         </>
@@ -181,7 +183,7 @@ const TasksPage: React.FC = () => {
       {/* Create Modal */}
       <Modal
         isOpen={isCreateModalOpen}
-        title="✓ Новая задача"
+        title={`✓ ${t('pages.tasksPage.newTask')}`}
         onClose={() => setIsCreateModalOpen(false)}
         size="lg"
       >
@@ -195,7 +197,7 @@ const TasksPage: React.FC = () => {
       {/* Edit Modal */}
       <Modal
         isOpen={isEditModalOpen && editingTask !== null}
-        title={`✏️ Редактировать задачу`}
+        title={`✏️ ${t('common.edit')}: ${editingTask?.task}`}
         onClose={() => {
           setIsEditModalOpen(false);
           setEditingTask(null);

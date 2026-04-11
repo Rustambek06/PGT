@@ -6,6 +6,7 @@ import com.tracker.Service.UserService;
 import jakarta.validation.Valid;
 
 import org.springframework.data.domain.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public Page<UserResponse> getAllUsers(Pageable pageable) {
         return userService.getAllUsers(pageable);
     }

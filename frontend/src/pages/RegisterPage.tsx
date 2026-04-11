@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import apiService from '../services/apiService';
 import styles from './AuthPage.module.css';
 
 const RegisterPage: React.FC = () => {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,11 +27,11 @@ const RegisterPage: React.FC = () => {
     const containsNumber = /\d/.test(value);
     const containsLetter = /[a-zA-Z]/.test(value);
     const containsSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
-    if (!lengthOk) return 'Минимум 8 символов';
-    if (!containsNumber) return 'Добавьте хотя бы одну цифру';
-    if (!containsLetter) return 'Добавьте хотя бы одну букву';
-    if (!containsSpecial) return 'Добавьте спецсимвол (!@#$...)';
-    return 'Надёжный пароль';
+    if (!lengthOk) return t('pages.registerPage.passwordTooShort');
+    if (!containsNumber) return 'Add a number';
+    if (!containsLetter) return 'Add a letter';
+    if (!containsSpecial) return 'Add a special character (!@#$...)';
+    return 'Strong';
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -38,7 +40,7 @@ const RegisterPage: React.FC = () => {
     setError('');
 
     const strength = passwordStrength(password);
-    if (strength !== 'Надёжный пароль') {
+    if (strength !== 'Strong') {
       setError(strength);
       setLoading(false);
       return;
@@ -47,14 +49,13 @@ const RegisterPage: React.FC = () => {
     try {
       const response = await apiService.register(name.trim(), email.trim(), password);
       if (response.status === 200 || response.status === 201) {
-        navigate('/login?info=' + encodeURIComponent('Аккаунт создан! Теперь войдите'), { replace: true });
+        navigate('/login?info=' + encodeURIComponent(t('pages.registerPage.register')), { replace: true });
       } else {
-        setError('Не удалось зарегистрироваться');
+        setError(t('pages.registerPage.registerError'));
       }
     } catch (err: any) {
       console.error('Register error:', err);
-      alert(JSON.stringify(err.response?.data || err.message));
-      const message = err?.response?.data?.message || err?.message || 'Ошибка регистрации';
+      const message = err?.response?.data?.message || err?.message || t('pages.registerPage.registerError');
       setError(message);
     } finally {
       setLoading(false);
@@ -64,15 +65,15 @@ const RegisterPage: React.FC = () => {
   return (
     <div className={styles.authPage}>
       <div className={styles.authCard}>
-        <h2 className={styles.authTitle}>Регистрация</h2>
-        <p className={styles.authDescription}>Создайте новый аккаунт, чтобы вести трекер</p>
+        <h2 className={styles.authTitle}>{t('pages.registerPage.title')}</h2>
+        <p className={styles.authDescription}>{t('pages.registerPage.register')}</p>
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className={styles.fieldGroup}>
             <label className={styles.fieldLabel} htmlFor="name">
-              Имя
+              {t('pages.registerPage.name')}
             </label>
             <div className={styles.inputRow}>
               <span className={styles.inputIcon}>👤</span>
@@ -82,7 +83,7 @@ const RegisterPage: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                placeholder="Ваше имя"
+                placeholder={t('pages.registerPage.enterName')}
                 autoComplete="name"
                 minLength={2}
               />
@@ -110,7 +111,7 @@ const RegisterPage: React.FC = () => {
 
           <div className={styles.fieldGroup}>
             <label className={styles.fieldLabel} htmlFor="password">
-              Пароль
+              {t('pages.registerPage.password')}
             </label>
             <div className={styles.inputRow}>
               <span className={styles.inputIcon}>🔒</span>
@@ -121,7 +122,7 @@ const RegisterPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Пароль"
+                placeholder={t('pages.registerPage.enterPassword')}
                 autoComplete="new-password"
                 minLength={8}
               />
@@ -129,23 +130,23 @@ const RegisterPage: React.FC = () => {
                 type="button"
                 className={styles.togglePassword}
                 onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                aria-label={showPassword ? t('common.hide') : t('common.show')}
               >
-                {showPassword ? 'Скрыть' : 'Показать'}
+                {showPassword ? t('common.hide') : t('common.show')}
               </button>
             </div>
           </div>
 
-          <div className={styles.feedback}>{password ? passwordStrength(password) : 'Пароль должен быть сложным'}</div>
+          <div className={styles.feedback}>{password ? passwordStrength(password) : t('pages.registerPage.passwordStrength')}</div>
 
           <button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? 'Создаем...' : 'Создать аккаунт'}
+            {loading ? t('common.loading') : t('pages.registerPage.register')}
           </button>
         </form>
 
         <div className={styles.helperLinks}>
-          <span>Уже есть аккаунт?</span>
-          <Link to="/login">Войти</Link>
+          <span>{t('pages.registerPage.haveAccount')}</span>
+          <Link to="/login">{t('pages.registerPage.login')}</Link>
         </div>
       </div>
     </div>

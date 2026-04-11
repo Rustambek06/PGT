@@ -6,11 +6,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useWindowSize } from '../hooks/useWindowSize';
 import styles from './Sidebar.module.css';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string>(() => localStorage.getItem('userName') || '');
   const { isMobile } = useWindowSize();
@@ -73,14 +75,19 @@ const Sidebar: React.FC = () => {
   };
 
   const navigationItems = [
-    { path: '/notes', label: 'Notes', icon: '📝' },
-    { path: '/tasks', label: 'Tasks', icon: '✓' },
-    { path: '/calendar', label: 'Calendar', icon: '📅' },
-    { path: '/users', label: 'Users', icon: '👥' },
-    { path: '/categories', label: 'Categories', icon: '📂' },
+    { path: '/notes', labelKey: 'navigation.notes', icon: '📝' },
+    { path: '/tasks', labelKey: 'navigation.tasks', icon: '✓' },
+    { path: '/calendar', labelKey: 'navigation.calendar', icon: '📅' },
+    { path: '/users', labelKey: 'navigation.users', icon: '👥' },
+    { path: '/categories', labelKey: 'navigation.categories', icon: '📂' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
 
   return (
     <>
@@ -131,20 +138,59 @@ const Sidebar: React.FC = () => {
             {userName ? userName[0].toUpperCase() : 'U'}
           </div>
           <div className={styles.userDetails}>
-            <p className={styles.userLabel}>Пользователь</p>
-            <p className={styles.userName}>{userName || 'Гость'}</p>
+            <p className={styles.userLabel}>{t('sidebar.user')}</p>
+            <p className={styles.userName}>{userName || t('common.guest')}</p>
           </div>
           {userName && (
-            <button
-              className={styles.logoutBtn}
-              onClick={() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('userName');
-                window.location.href = '/login';
-              }}
-            >
-              Выйти
-            </button>
+            <>
+              <button
+                className={styles.logoutBtn}
+                onClick={() => {
+                  localStorage.removeItem('token');
+                  localStorage.removeItem('userName');
+                  window.location.href = '/login';
+                }}
+              >
+                {t('sidebar.logout')}
+              </button>
+              {/* Language Toggle */}
+              <div className={styles.languageToggle} style={{ marginTop: '0.5rem', display: 'flex', gap: '0.25rem', borderTop: '1px solid rgba(255, 165, 0, 0.1)', paddingTop: '0.5rem' }}>
+                <button
+                  onClick={() => handleLanguageChange('ru')}
+                  style={{
+                    flex: 1,
+                    padding: '0.4rem',
+                    background: i18n.language === 'ru' ? 'rgba(255, 165, 0, 0.3)' : 'rgba(255, 165, 0, 0.1)',
+                    border: '1px solid rgba(255, 165, 0, 0.3)',
+                    borderRadius: '4px',
+                    color: 'var(--color-text-primary)',
+                    cursor: 'pointer',
+                    fontSize: '0.8rem',
+                    fontWeight: i18n.language === 'ru' ? '600' : '500',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  РУ
+                </button>
+                <button
+                  onClick={() => handleLanguageChange('en')}
+                  style={{
+                    flex: 1,
+                    padding: '0.4rem',
+                    background: i18n.language === 'en' ? 'rgba(59, 130, 246, 0.3)' : 'rgba(59, 130, 246, 0.1)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    borderRadius: '4px',
+                    color: 'var(--color-text-primary)',
+                    cursor: 'pointer',
+                    fontSize: '0.8rem',
+                    fontWeight: i18n.language === 'en' ? '600' : '500',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  EN
+                </button>
+              </div>
+            </>
           )}
         </div>
 
@@ -162,7 +208,7 @@ const Sidebar: React.FC = () => {
                 className={`${styles.navLink} ${isActive(item.path) ? styles.active : ''}`}
               >
                 <span className={styles.icon}>{item.icon}</span>
-                <span className={styles.label}>{item.label}</span>
+                <span className={styles.label}>{t(item.labelKey)}</span>
               </Link>
             </motion.div>
           ))}

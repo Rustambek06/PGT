@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './CategoryForm.module.css';
 import { Category, CategoryRequest } from '../types';
 
@@ -15,6 +16,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   onCancel,
   loading = false,
 }) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = React.useState<CategoryRequest>({
     name: initialData?.name || '',
   });
@@ -25,7 +27,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const newErrors: Partial<CategoryRequest> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Category name is required';
+      newErrors.name = t('forms.categoryForm.nameRequired');
     }
 
     setErrors(newErrors);
@@ -59,7 +61,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>
-          Category Name
+          {t('forms.categoryForm.name')}
         </label>
         <input
           id="name"
@@ -68,7 +70,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           value={formData.name}
           onChange={handleChange}
           className={`${styles.input} ${errors.name ? styles.error : ''}`}
-          placeholder="Enter category name"
+          placeholder={t('forms.categoryForm.enterName')}
           disabled={loading || isSubmitting}
           autoFocus
         />
@@ -82,14 +84,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           className={styles.cancelButton}
           disabled={loading || isSubmitting}
         >
-          Cancel
+          {t('common.cancel')}
         </button>
         <button
           type="submit"
           className={styles.submitButton}
           disabled={loading || isSubmitting}
         >
-          {isSubmitting ? 'Saving...' : initialData ? 'Update Category' : 'Create Category'}
+          {isSubmitting ? t('common.loading') : t('common.save')}
         </button>
       </div>
     </form>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
@@ -18,6 +19,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   loading = false,
 }) => {
+  const { t } = useTranslation();
   const startItem = currentPage * pageSize + 1;
   const endItem = Math.min((currentPage + 1) * pageSize, totalElements);
 
@@ -54,7 +56,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     <div className={styles.container}>
       <div className={styles.info}>
         <span className={styles.text}>
-          Показано {startItem}-{endItem} из {totalElements}
+          {t('common.pagination.showing')} {startItem}-{endItem} {t('common.pagination.of')} {totalElements}
         </span>
       </div>
 
@@ -65,7 +67,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === 0 || loading}
           aria-label="Previous page"
         >
-          ← Назад
+          {t('common.pagination.previous')}
         </button>
 
         <div className={styles.pages}>
@@ -100,7 +102,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === totalPages - 1 || loading}
           aria-label="Next page"
         >
-          Далее →
+          {t('common.pagination.next')}
         </button>
       </div>
     </div>

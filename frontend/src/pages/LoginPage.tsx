@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import apiService from '../services/apiService';
 import styles from './AuthPage.module.css';
 
 const LoginPage: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -37,12 +39,11 @@ const LoginPage: React.FC = () => {
         window.dispatchEvent(new Event('userLogin'));
         navigate(from, { replace: true });
       } else {
-        setError('Не удалось войти: неверный ответ сервера.');
+        setError(t('pages.loginPage.loginError'));
       }
     } catch (err: any) {
       console.error('Login error:', err);
-      alert(JSON.stringify(err.response?.data || err.message));
-      const message = err?.response?.data?.message || err?.message || 'Ошибка входа';
+      const message = err?.response?.data?.message || err?.message || t('pages.loginPage.loginError');
       setError(message);
     } finally {
       setLoading(false);
@@ -52,8 +53,8 @@ const LoginPage: React.FC = () => {
   return (
     <div className={styles.authPage}>
       <div className={styles.authCard}>
-        <h2 className={styles.authTitle}>Вход</h2>
-        <p className={styles.authDescription}>Используйте email и пароль для входа в Tracker</p>
+        <h2 className={styles.authTitle}>{t('pages.loginPage.title')}</h2>
+        <p className={styles.authDescription}>{t('pages.loginPage.email')} {t('pages.loginPage.password')}</p>
 
         {infoMessage && <div className={styles.feedback}>{infoMessage}</div>}
         {error && <div className={styles.errorMessage}>{error}</div>}
@@ -61,7 +62,7 @@ const LoginPage: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.fieldGroup}>
             <label className={styles.fieldLabel} htmlFor="email">
-              Email
+              {t('pages.loginPage.email')}
             </label>
             <div className={styles.inputRow}>
               <span className={styles.inputIcon}>📧</span>
@@ -80,7 +81,7 @@ const LoginPage: React.FC = () => {
 
           <div className={styles.fieldGroup}>
             <label className={styles.fieldLabel} htmlFor="password">
-              Пароль
+              {t('pages.loginPage.password')}
             </label>
             <div className={styles.inputRow}>
               <span className={styles.inputIcon}>🔒</span>
@@ -91,7 +92,7 @@ const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Введите пароль"
+                placeholder={t('pages.loginPage.enterPassword')}
                 autoComplete="current-password"
                 minLength={6}
               />
@@ -99,21 +100,21 @@ const LoginPage: React.FC = () => {
                 type="button"
                 className={styles.togglePassword}
                 onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={showPassword ? 'Скрыть пароль' : 'Показать пароль'}
+                aria-label={showPassword ? t('common.hide') : t('common.show')}
               >
-                {showPassword ? 'Скрыть' : 'Показать'}
+                {showPassword ? t('common.hide') : t('common.show')}
               </button>
             </div>
           </div>
 
           <button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? 'Входим...' : 'Войти'}
+            {loading ? t('common.loading') : t('pages.loginPage.login')}
           </button>
         </form>
 
         <div className={styles.helperLinks}>
-          <span>Нет аккаунта?</span>
-          <Link to="/register">Зарегистрироваться</Link>
+          <span>{t('pages.loginPage.noAccount')}</span>
+          <Link to="/register">{t('pages.loginPage.register')}</Link>
         </div>
       </div>
     </div>

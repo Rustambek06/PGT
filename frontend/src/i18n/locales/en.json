@@ -1,0 +1,215 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "close": "Close",
+    "logout": "Logout",
+    "user": "User",
+    "guest": "Guest",
+    "optional": "optional",
+    "required": "required",
+    "new": "New",
+    "show": "Show",
+    "hide": "Hide",
+    "pagination": {
+      "showing": "Showing",
+      "of": "of",
+      "previous": "← Previous",
+      "next": "Next →"
+    }
+  },
+  "navigation": {
+    "notes": "Notes",
+    "tasks": "Tasks",
+    "calendar": "Calendar",
+    "users": "Users",
+    "categories": "Categories"
+  },
+  "pages": {
+    "loginPage": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "login": "Login",
+      "noAccount": "No account?",
+      "register": "Register",
+      "invalidCredentials": "Invalid credentials",
+      "enterEmail": "Enter email",
+      "enterPassword": "Enter password",
+      "loginError": "Login error"
+    },
+    "registerPage": {
+      "title": "Register",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "register": "Register",
+      "haveAccount": "Already have an account?",
+      "login": "Login",
+      "enterName": "Enter name",
+      "enterEmail": "Enter email",
+      "enterPassword": "Enter password",
+      "passwordMismatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "passwordStrength": "Password Strength",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong",
+      "registerError": "Registration error"
+    },
+    "notesPage": {
+      "title": "Notes",
+      "create": "Create",
+      "noNotes": "No notes",
+      "newNote": "New Note",
+      "edit": "Edit"
+    },
+    "tasksPage": {
+      "title": "Tasks",
+      "create": "Create",
+      "noTasks": "No tasks",
+      "newTask": "New Task",
+      "edit": "Edit"
+    },
+    "usersPage": {
+      "title": "Users",
+      "create": "Create",
+      "noUsers": "No users",
+      "newUser": "New User",
+      "edit": "Edit"
+    },
+    "categoriesPage": {
+      "title": "Categories",
+      "create": "Create",
+      "noCategories": "No categories",
+      "newCategory": "New Category",
+      "edit": "Edit"
+    },
+    "calendarPage": {
+      "title": "Calendar",
+      "subtitle": "View your notes and tasks organized by date",
+      "week": "Week",
+      "day": "Day",
+      "month": "Month",
+      "year": "Year",
+      "previous": "← Previous",
+      "next": "Next →",
+      "today": "Today",
+      "noItems": "No items",
+      "notes": "Notes",
+      "tasks": "Tasks",
+      "noNotesForDay": "No notes for this day",
+      "noTasksForDay": "No tasks for this day",
+      "monday": "Mon",
+      "tuesday": "Tue",
+      "wednesday": "Wed",
+      "thursday": "Thu",
+      "friday": "Fri",
+      "saturday": "Sat",
+      "sunday": "Sun"
+    }
+  },
+  "forms": {
+    "noteForm": {
+      "title": "Title",
+      "content": "Content",
+      "category": "Category",
+      "titleRequired": "Title is required",
+      "contentRequired": "Content is required",
+      "enterTitle": "Enter note title",
+      "enterContent": "Write note content...",
+      "createCategory": "New Category",
+      "categoryName": "New category name",
+      "categoryRequired": "Category name is required",
+      "categoryCreating": "Creating...",
+      "categoryCreateError": "Error creating category",
+      "categoryLoading": "Loading categories...",
+      "notSelected": "Not selected",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "taskForm": {
+      "title": "Title",
+      "description": "Description",
+      "priority": "Priority",
+      "status": "Status",
+      "dueDate": "Due Date",
+      "category": "Category",
+      "titleRequired": "Title is required",
+      "enterTitle": "Enter task title",
+      "enterDescription": "Describe the task (optional)",
+      "priorityLow": "Low",
+      "priorityMedium": "Medium",
+      "priorityHigh": "High",
+      "statusTodo": "Pending",
+      "statusInProgress": "In Progress",
+      "statusDone": "Done",
+      "createCategory": "New Category",
+      "categoryName": "New category name",
+      "categoryRequired": "Category name is required",
+      "categoryCreating": "Creating...",
+      "categoryCreateError": "Error creating category",
+      "categoryLoading": "Loading categories...",
+      "notSelected": "Not selected",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "userForm": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "enterName": "Enter name",
+      "enterEmail": "Enter email",
+      "enterPassword": "Enter password",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "categoryForm": {
+      "name": "Name",
+      "nameRequired": "Name is required",
+      "enterName": "Enter category name",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Delete",
+      "confirmDelete": "Are you sure you want to delete",
+      "confirm": "Yes, delete",
+      "cancel": "Cancel",
+      "deleting": "Deleting...",
+      "warning": "This action cannot be undone.",
+      "note": "note",
+      "task": "task",
+      "user": "user",
+      "category": "category"
+    }
+  },
+  "sidebar": {
+    "user": "User",
+    "logout": "Logout",
+    "language": "Language"
+  },
+  "errors": {
+    "loading": "Loading error",
+    "creating": "Creation error",
+    "updating": "Update error",
+    "deleting": "Deletion error",
+    "fetching": "Error fetching data"
+  }
+}

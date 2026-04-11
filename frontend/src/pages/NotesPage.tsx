@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useFetchNotes } from '../hooks/useFetchNotes';
 import { Note, NoteRequest } from '../types';
 import NoteCard from '../components/NoteCard';
@@ -17,6 +18,7 @@ import { DeleteConfirmation } from '../components/DeleteConfirmation';
 import styles from './Pages.module.css';
 
 const NotesPage: React.FC = () => {
+  const { t } = useTranslation();
   const {
     data,
     loading,
@@ -117,10 +119,10 @@ const NotesPage: React.FC = () => {
     >
       <div className={styles.header}>
         <h1 className={styles.title}>
-          📝 Заметки ({data.totalElements})
+          📝 {t('pages.notesPage.title')} ({data.totalElements})
         </h1>
         <button className={styles.createButton} onClick={handleCreateClick}>
-          ➕ Создать
+          ➕ {t('common.create')}
         </button>
       </div>
 
@@ -172,7 +174,7 @@ const NotesPage: React.FC = () => {
             </>
           ) : (
             <div className={styles.emptyState}>
-              <p>Нет заметок</p>
+              <p>{t('pages.notesPage.noNotes')}</p>
             </div>
           )}
         </>
@@ -181,7 +183,7 @@ const NotesPage: React.FC = () => {
       {/* Create Modal */}
       <Modal
         isOpen={isCreateModalOpen}
-        title="📝 Новая заметка"
+        title={`📝 ${t('pages.notesPage.newNote')}`}
         onClose={() => setIsCreateModalOpen(false)}
         size="lg"
       >
@@ -195,7 +197,7 @@ const NotesPage: React.FC = () => {
       {/* Edit Modal */}
       <Modal
         isOpen={isEditModalOpen && editingNote !== null}
-        title={`✏️ Редактировать заметку`}
+        title={`✏️ ${t('common.edit')}: ${editingNote?.title}`}
         onClose={() => {
           setIsEditModalOpen(false);
           setEditingNote(null);

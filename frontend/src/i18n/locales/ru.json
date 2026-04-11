@@ -1,0 +1,215 @@
+{
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "close": "Закрыть",
+    "logout": "Выйти",
+    "user": "Пользователь",
+    "guest": "Гость",
+    "optional": "опционально",
+    "required": "требуется",
+    "new": "Новый",
+    "show": "Показать",
+    "hide": "Скрыть",
+    "pagination": {
+      "showing": "Показано",
+      "of": "из",
+      "previous": "← Назад",
+      "next": "Далее →"
+    }
+  },
+  "navigation": {
+    "notes": "Заметки",
+    "tasks": "Задачи",
+    "calendar": "Календарь",
+    "users": "Пользователи",
+    "categories": "Категории"
+  },
+  "pages": {
+    "loginPage": {
+      "title": "Вход",
+      "email": "Email",
+      "password": "Пароль",
+      "login": "Войти",
+      "noAccount": "Нет аккаунта?",
+      "register": "Зарегистрироваться",
+      "invalidCredentials": "Неверные учетные данные",
+      "enterEmail": "Введите email",
+      "enterPassword": "Введите пароль",
+      "loginError": "Ошибка при входе"
+    },
+    "registerPage": {
+      "title": "Регистрация",
+      "name": "Имя",
+      "email": "Email",
+      "password": "Пароль",
+      "confirmPassword": "Подтвердите пароль",
+      "register": "Зарегистрироваться",
+      "haveAccount": "Уже есть аккаунт?",
+      "login": "Войти",
+      "enterName": "Введите имя",
+      "enterEmail": "Введите email",
+      "enterPassword": "Введите пароль",
+      "passwordMismatch": "Пароли не совпадают",
+      "passwordTooShort": "Пароль должен быть минимум 6 символов",
+      "passwordStrength": "Надежность пароля",
+      "weak": "Слабый",
+      "medium": "Средний",
+      "strong": "Сильный",
+      "registerError": "Ошибка при регистрации"
+    },
+    "notesPage": {
+      "title": "Заметки",
+      "create": "Создать",
+      "noNotes": "Нет заметок",
+      "newNote": "Новая заметка",
+      "edit": "Редактировать"
+    },
+    "tasksPage": {
+      "title": "Задачи",
+      "create": "Создать",
+      "noTasks": "Нет задач",
+      "newTask": "Новая задача",
+      "edit": "Редактировать"
+    },
+    "usersPage": {
+      "title": "Пользователи",
+      "create": "Создать",
+      "noUsers": "Нет пользователей",
+      "newUser": "Новый пользователь",
+      "edit": "Редактировать"
+    },
+    "categoriesPage": {
+      "title": "Категории",
+      "create": "Создать",
+      "noCategories": "Нет категорий",
+      "newCategory": "Новая категория",
+      "edit": "Редактировать"
+    },
+    "calendarPage": {
+      "title": "Календарь",
+      "subtitle": "Просмотрите свои заметки и задачи, организованные по датам",
+      "week": "Неделя",
+      "day": "День",
+      "month": "Месяц",
+      "year": "Год",
+      "previous": "← Назад",
+      "next": "Далее →",
+      "today": "Сегодня",
+      "noItems": "Нет элементов",
+      "notes": "Заметки",
+      "tasks": "Задачи",
+      "noNotesForDay": "Нет заметок на этот день",
+      "noTasksForDay": "Нет задач на этот день",
+      "monday": "Пн",
+      "tuesday": "Вт",
+      "wednesday": "Ср",
+      "thursday": "Чт",
+      "friday": "Пт",
+      "saturday": "Сб",
+      "sunday": "Вс"
+    }
+  },
+  "forms": {
+    "noteForm": {
+      "title": "Название",
+      "content": "Содержание",
+      "category": "Категория",
+      "titleRequired": "Название требуется",
+      "contentRequired": "Содержание требуется",
+      "enterTitle": "Введите название заметки",
+      "enterContent": "Напишите содержание заметки...",
+      "createCategory": "Новая категория",
+      "categoryName": "Название новой категории",
+      "categoryRequired": "Название категории требуется",
+      "categoryCreating": "Создание...",
+      "categoryCreateError": "Ошибка при создании категории",
+      "categoryLoading": "Загрузка категорий...",
+      "notSelected": "Не выбрана",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "cancel": "Отмена"
+    },
+    "taskForm": {
+      "title": "Название",
+      "description": "Описание",
+      "priority": "Приоритет",
+      "status": "Статус",
+      "dueDate": "Срок",
+      "category": "Категория",
+      "titleRequired": "Название требуется",
+      "enterTitle": "Введите название задачи",
+      "enterDescription": "Опишите задачу (опционально)",
+      "priorityLow": "Низкий",
+      "priorityMedium": "Средний",
+      "priorityHigh": "Высокий",
+      "statusTodo": "В ожидании",
+      "statusInProgress": "В процессе",
+      "statusDone": "Завершено",
+      "createCategory": "Новая категория",
+      "categoryName": "Название новой категории",
+      "categoryRequired": "Название категории требуется",
+      "categoryCreating": "Создание...",
+      "categoryCreateError": "Ошибка при создании категории",
+      "categoryLoading": "Загрузка категорий...",
+      "notSelected": "Не выбрана",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "cancel": "Отмена"
+    },
+    "userForm": {
+      "name": "Имя",
+      "email": "Email",
+      "password": "Пароль",
+      "nameRequired": "Имя требуется",
+      "emailRequired": "Email требуется",
+      "passwordRequired": "Пароль требуется",
+      "enterName": "Введите имя",
+      "enterEmail": "Введите email",
+      "enterPassword": "Введите пароль",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "cancel": "Отмена"
+    },
+    "categoryForm": {
+      "name": "Название",
+      "nameRequired": "Название требуется",
+      "enterName": "Введите название категории",
+      "save": "Сохранить",
+      "saving": "Сохранение...",
+      "cancel": "Отмена"
+    }
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Удалить",
+      "confirmDelete": "Вы уверены, что хотите удалить",
+      "confirm": "Да, удалить",
+      "cancel": "Отмена",
+      "deleting": "Удаляю...",
+      "warning": "Это действие невозможно отменить.",
+      "note": "заметку",
+      "task": "задачу",
+      "user": "пользователя",
+      "category": "категорию"
+    }
+  },
+  "sidebar": {
+    "user": "Пользователь",
+    "logout": "Выйти",
+    "language": "Язык"
+  },
+  "errors": {
+    "loading": "Ошибка при загрузке",
+    "creating": "Ошибка при создании",
+    "updating": "Ошибка при обновлении",
+    "deleting": "Ошибка при удалении",
+    "fetching": "Ошибка при получении данных"
+  }
+}

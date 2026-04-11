@@ -3,6 +3,7 @@ package com.tracker.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,10 +18,11 @@ public class Note {
     private String title;
     private String content;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference("user-notes")
     private User user;
 
     private LocalDateTime createdAt = LocalDateTime.now();

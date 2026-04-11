@@ -1,9 +1,5 @@
-/**
- * Calendar Page
- * Отображает заметки и задачи в виде календаря (неделя, день, месяц, год)
- */
-
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   startOfWeek,
@@ -30,6 +26,7 @@ interface DayItems {
 }
 
 const CalendarPage: React.FC = () => {
+  const { t } = useTranslation();
   const [view, setView] = useState<CalendarView>('week');
   const [currentDate, setCurrentDate] = useState(new Date());
   const { notes, loading: notesLoading, error: notesError, refetch: refetchNotes } = useFetchNotes();
@@ -154,7 +151,7 @@ const CalendarPage: React.FC = () => {
 
             <div className={styles.dayCellContent}>
               {items.notes.length === 0 && items.tasks.length === 0 ? (
-                <div className={styles.emptyDay}>No items</div>
+                <div className={styles.emptyDay}>{t('pages.calendarPage.noItems')}</div>
               ) : (
                 <>
                   {items.notes.map((note: Note) => (
@@ -194,9 +191,9 @@ const CalendarPage: React.FC = () => {
         
         <div className={styles.dayViewContent}>
           <div className={styles.dayViewSection}>
-            <h3 className={styles.sectionTitle}>📝 Notes</h3>
+            <h3 className={styles.sectionTitle}>📝 {t('pages.calendarPage.notes')}</h3>
             {items.notes.length === 0 ? (
-              <p className={styles.emptyMessage}>No notes for this day</p>
+              <p className={styles.emptyMessage}>{t('pages.calendarPage.noNotesForDay')}</p>
             ) : (
               <div className={styles.itemsList}>
                 {items.notes.map((note: Note) => (
@@ -211,9 +208,9 @@ const CalendarPage: React.FC = () => {
           </div>
 
           <div className={styles.dayViewSection}>
-            <h3 className={styles.sectionTitle}>✓ Tasks</h3>
+            <h3 className={styles.sectionTitle}>✓ {t('pages.calendarPage.tasks')}</h3>
             {items.tasks.length === 0 ? (
-              <p className={styles.emptyMessage}>No tasks for this day</p>
+              <p className={styles.emptyMessage}>{t('pages.calendarPage.noTasksForDay')}</p>
             ) : (
               <div className={styles.itemsList}>
                 {items.tasks.map((task: Task) => (
@@ -243,7 +240,7 @@ const CalendarPage: React.FC = () => {
 
   const renderMonthView = () => (
     <div className={styles.monthView}>
-      {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+      {[t('pages.calendarPage.monday'), t('pages.calendarPage.tuesday'), t('pages.calendarPage.wednesday'), t('pages.calendarPage.thursday'), t('pages.calendarPage.friday'), t('pages.calendarPage.saturday'), t('pages.calendarPage.sunday')].map((day) => (
         <div key={day} className={styles.monthDayHeader}>
           {day}
         </div>
@@ -330,8 +327,8 @@ const CalendarPage: React.FC = () => {
       transition={{ duration: 0.3 }}
     >
       <div className={styles.header}>
-        <h1 className={styles.title}>📅 Calendar</h1>
-        <p className={styles.subtitle}>View your notes and tasks organized by date</p>
+        <h1 className={styles.title}>📅 {t('pages.calendarPage.title')}</h1>
+        <p className={styles.subtitle}>{t('pages.calendarPage.subtitle')}</p>
       </div>
 
       {/* Controls */}
@@ -343,21 +340,21 @@ const CalendarPage: React.FC = () => {
               className={`${styles.viewButton} ${view === v ? styles.active : ''}`}
               onClick={() => setView(v)}
             >
-              {v.charAt(0).toUpperCase() + v.slice(1)}
+              {t(`pages.calendarPage.${v}`)}
             </button>
           ))}
         </div>
 
         <div className={styles.navigationButtons}>
           <button className={styles.navigationButton} onClick={handlePrevPeriod} title="Previous">
-            ← Prev
+            {t('pages.calendarPage.previous')}
           </button>
           <span className={styles.dateDisplay}>{getViewTitle()}</span>
           <button className={styles.navigationButton} onClick={handleNextPeriod} title="Next">
-            Next →
+            {t('pages.calendarPage.next')}
           </button>
           <button className={styles.navigationButton} onClick={handleToday}>
-            Today
+            {t('pages.calendarPage.today')}
           </button>
         </div>
       </div>

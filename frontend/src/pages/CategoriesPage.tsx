@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCategories } from '../hooks/useCategories';
 import { Category } from '../types';
 import { Modal } from '../components/Modal';
@@ -11,6 +12,7 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import styles from '../pages/Pages.module.css';
 
 export const CategoriesPage: React.FC = () => {
+  const { t } = useTranslation();
   const {
     data,
     loading,
@@ -94,10 +96,10 @@ export const CategoriesPage: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>
-          📂 Категории ({data.totalElements})
+          📂 {t('pages.categoriesPage.title')} ({data.totalElements})
         </h1>
         <button className={styles.createButton} onClick={handleCreateClick}>
-          ➕ Создать
+          ➕ {t('common.create')}
         </button>
       </div>
 
@@ -117,7 +119,7 @@ export const CategoriesPage: React.FC = () => {
 
       {data.content.length === 0 && !loading && (
         <div className={styles.emptyState}>
-          <p>Нет категорий</p>
+          <p>{t('pages.categoriesPage.noCategories')}</p>
         </div>
       )}
 
@@ -135,7 +137,7 @@ export const CategoriesPage: React.FC = () => {
       {/* Create Modal */}
       <Modal
         isOpen={isCreateModalOpen}
-        title="📂 Новая категория"
+        title={`📂 ${t('pages.categoriesPage.newCategory')}`}
         onClose={() => setIsCreateModalOpen(false)}
         size="md"
       >
@@ -149,7 +151,7 @@ export const CategoriesPage: React.FC = () => {
       {/* Edit Modal */}
       <Modal
         isOpen={isEditModalOpen && editingCategory !== null}
-        title={`✏️ Редактировать: ${editingCategory?.name}`}
+        title={`✏️ ${t('common.edit')}: ${editingCategory?.name}`}
         onClose={() => {
           setIsEditModalOpen(false);
           setEditingCategory(null);
