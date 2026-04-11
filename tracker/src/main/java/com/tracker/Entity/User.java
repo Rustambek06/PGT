@@ -1,5 +1,10 @@
 package com.tracker.Entity;
 
+import java.time.Instant;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -24,6 +30,10 @@ public class User {
     
     private Status status;
     
+    @CreatedDate
+    @Column(name = "registration_date", nullable = false, updatable = false)
+    private Instant registrationTime;
+
     private String encodedPassword;
     
     public User() {}
