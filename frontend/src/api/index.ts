@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { Note, Task, NoteRequest, TaskRequest } from '../types';
 
 const api = axios.create({
-  baseURL: 'https://personalgrowthtracker.onrender.com/api',
+  baseURL: 'https://personalgrowthtracker.onrender.com',
 });
 
 export const notesApi = {
