@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { PageResponse, AuthResponse } from '../types';
 
-const API_BASE = 'https://personalgrowthtracker.onrender.com/auth';
+const API_BASE = 'https://personalgrowthtracker.onrender.com';
 
 const instance: AxiosInstance = axios.create({
   baseURL: API_BASE,
