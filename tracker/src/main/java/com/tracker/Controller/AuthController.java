@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "https://pgtracker.vercel.app")
+//@CrossOrigin(origins = "https://pgtracker.vercel.app")
 public class AuthController {
     
     private final AuthService authService;

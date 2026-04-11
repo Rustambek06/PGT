@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
-@CrossOrigin(origins = "https://pgtracker.vercel.app")
+//@CrossOrigin(origins = "https://pgtracker.vercel.app")
 public class CategoryController {
     private final CategoryService categoryService;
 

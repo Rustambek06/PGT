@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/notes")
-@CrossOrigin(origins = "https://pgtracker.vercel.app")
+//@CrossOrigin(origins = "https://pgtracker.vercel.app")
 public class NoteController {
     private final NoteService noteService;
 

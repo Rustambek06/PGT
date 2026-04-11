@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/tasks")
-@CrossOrigin(origins = "https://pgtracker.vercel.app")
+//@CrossOrigin(origins = "https://pgtracker.vercel.app")
 public class TaskController {
     private final TaskService taskService;
 
