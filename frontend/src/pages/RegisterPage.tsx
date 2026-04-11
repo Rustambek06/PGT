@@ -5,7 +5,7 @@ import apiService from '../services/apiService';
 import styles from './AuthPage.module.css';
 
 const RegisterPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +18,7 @@ const RegisterPage: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/notes', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [navigate]);
 
@@ -62,8 +62,29 @@ const RegisterPage: React.FC = () => {
     }
   };
 
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   return (
     <div className={styles.authPage}>
+      {/* Language Toggle */}
+      <div className={styles.languageToggle}>
+        <button
+          onClick={() => handleLanguageChange('ru')}
+          className={`${styles.languageButton} ${i18n.language === 'ru' ? styles.active : ''}`}
+        >
+          🇷🇺 РУ
+        </button>
+        <button
+          onClick={() => handleLanguageChange('en')}
+          className={`${styles.languageButton} ${i18n.language === 'en' ? styles.active : ''}`}
+        >
+          🇺🇸 EN
+        </button>
+      </div>
+
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('pages.registerPage.title')}</h2>
         <p className={styles.authDescription}>{t('pages.registerPage.register')}</p>

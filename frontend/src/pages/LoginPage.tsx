@@ -5,7 +5,7 @@ import apiService from '../services/apiService';
 import styles from './AuthPage.module.css';
 
 const LoginPage: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/notes', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [navigate]);
 
@@ -50,8 +50,29 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   return (
     <div className={styles.authPage}>
+      {/* Language Toggle */}
+      <div className={styles.languageToggle}>
+        <button
+          onClick={() => handleLanguageChange('ru')}
+          className={`${styles.languageButton} ${i18n.language === 'ru' ? styles.active : ''}`}
+        >
+          🇷🇺 РУ
+        </button>
+        <button
+          onClick={() => handleLanguageChange('en')}
+          className={`${styles.languageButton} ${i18n.language === 'en' ? styles.active : ''}`}
+        >
+          🇺🇸 EN
+        </button>
+      </div>
+
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('pages.loginPage.title')}</h2>
         <p className={styles.authDescription}>{t('pages.loginPage.email')} {t('pages.loginPage.password')}</p>

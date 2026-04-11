@@ -1,4 +1,63 @@
 {
+  "home": {
+    "hero": {
+      "title": "Track Your Personal Growth",
+      "subtitle": "Get closer to your goals every day. Track habits, set tasks, and analyze progress in a user-friendly app",
+      "getStarted": "Start Free",
+      "signIn": "Sign In"
+    },
+    "stats": {
+      "users": "5000+ users",
+      "habits": "10000+ habits tracked",
+      "goals": "2500+ goals achieved",
+      "notes": "15000+ progress notes"
+    },
+    "features": {
+      "title": "How We Help Your Personal Growth",
+      "description": "Simple tools for complex goals",
+      "habits": {
+        "title": "Habit Tracking",
+        "description": "Mark daily habit completion: reading, exercise, meditation. See progress in charts and statistics"
+      },
+      "goals": {
+        "title": "Goal Achievement",
+        "description": "Break big goals into small steps. Set deadlines and track progress for each task"
+      },
+      "reflection": {
+        "title": "Reflection & Notes",
+        "description": "Keep a journal of achievements, analyze successes and failures. Understand what works for your growth"
+      },
+      "calendar": {
+        "title": "Calendar Overview",
+        "description": "View all activities in one place. See patterns and connections between habits and results"
+      }
+    },
+    "testimonials": {
+      "title": "Success Stories",
+      "testimonial1": {
+        "text": "In 6 months I developed a habit of reading 30 minutes a day. The app showed my progress and motivated me to continue",
+        "author": "Anna, 28"
+      },
+      "testimonial2": {
+        "text": "Finally started running regularly. Broke down the goal 'run a marathon' into stages and tracked every kilometer",
+        "author": "Michael, 35"
+      },
+      "testimonial3": {
+        "text": "I've been keeping a meditation journal for a year. The app helps analyze how practice affects my mood and productivity",
+        "author": "Elena, 31"
+      }
+    },
+    "cta": {
+      "title": "Ready to start your journey to a better version of yourself?",
+      "description": "Join the community of people who work on themselves daily and achieve results",
+      "button": "Create Account"
+    },
+    "footer": {
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "copyright": "© 2024 Personal Growth Tracker. All rights reserved."
+    }
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",

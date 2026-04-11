@@ -1,11 +1,7 @@
-/**
- * Main App Component
- * Маршрутизация между страницами Notes, Tasks и Calendar
- */
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
+import HomePage from './pages/HomePage';
 import NotesPage from './pages/NotesPage';
 import TasksPage from './pages/TasksPage';
 import CalendarPage from './pages/CalendarPage';
@@ -23,10 +19,6 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (location.pathname === '/') {
-    return <Navigate to="/notes" replace />;
-  }
-
   return <>{children}</>;
 };
 
@@ -34,6 +26,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
@@ -86,7 +79,6 @@ const App: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<Navigate to="/notes" replace />} />
       </Routes>
     </Router>
   );
