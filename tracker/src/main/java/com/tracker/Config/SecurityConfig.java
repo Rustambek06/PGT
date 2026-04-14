@@ -105,6 +105,7 @@ public class SecurityConfig {
             
             // 3. Настраиваем правила доступа
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/ping").permitAll()
                 // Разрешаем все OPTIONS запросы (Preflight)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // Разрешаем вход и регистрацию
