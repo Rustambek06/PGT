@@ -14,13 +14,17 @@ const RegisterPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  const alreadyLoggedIn = Boolean(localStorage.getItem('token'));
+  const loggedInUserName = localStorage.getItem('userName') || '';
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/', { replace: true });
-    }
-  }, [navigate]);
+  const handleLogoutClear = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('authToken');
+    window.location.reload();
+  };
 
   const passwordStrength = (value: string) => {
     const lengthOk = value.length >= 8;
@@ -88,6 +92,15 @@ const RegisterPage: React.FC = () => {
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('pages.registerPage.title')}</h2>
         <p className={styles.authDescription}>{t('pages.registerPage.register')}</p>
+
+        {alreadyLoggedIn && (
+          <div className={styles.infoBanner}>
+            {t('pages.registerPage.alreadyLoggedIn', { name: loggedInUserName })}
+            <button type="button" className={styles.authLinkButton} onClick={handleLogoutClear}>
+              {t('common.logout')}
+            </button>
+          </div>
+        )}
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 

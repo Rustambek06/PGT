@@ -103,7 +103,8 @@
       "enterEmail": "Введите email",
       "enterPassword": "Введите пароль",
       "loginError": "Ошибка при входе",
-      "backHome": "Вернуться на главную"
+      "backHome": "Вернуться на главную",
+      "alreadyLoggedIn": "Вы уже вошли как {{name}}."
     },
     "registerPage": {
       "title": "Регистрация",
@@ -120,6 +121,7 @@
       "passwordMismatch": "Пароли не совпадают",
       "passwordTooShort": "Пароль должен быть минимум 6 символов",
       "passwordStrength": "Надежность пароля",
+      "alreadyLoggedIn": "Вы уже вошли как {{name}}.",
       "weak": "Слабый",
       "medium": "Средний",
       "strong": "Сильный",

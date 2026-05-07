@@ -155,6 +155,8 @@ const Sidebar: React.FC = () => {
                   localStorage.removeItem('token');
                   localStorage.removeItem('userName');
                   localStorage.removeItem('userRole');
+                  localStorage.removeItem('userId');
+                  localStorage.removeItem('authToken');
                   window.location.href = '/login';
                 }}
               >

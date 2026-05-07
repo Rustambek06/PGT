@@ -103,7 +103,8 @@
       "enterEmail": "Enter email",
       "enterPassword": "Enter password",
       "loginError": "Login error",
-      "backHome": "Back to Home"
+      "backHome": "Back to Home",
+      "alreadyLoggedIn": "You are already logged in as {{name}}."
     },
     "registerPage": {
       "title": "Register",
@@ -120,6 +121,7 @@
       "passwordMismatch": "Passwords do not match",
       "passwordTooShort": "Password must be at least 6 characters",
       "passwordStrength": "Password Strength",
+      "alreadyLoggedIn": "You are already logged in as {{name}}.",
       "weak": "Weak",
       "medium": "Medium",
       "strong": "Strong",

@@ -18,13 +18,17 @@ const LoginPage: React.FC = () => {
   const from = location.state?.from?.pathname || '/notes';
 
   const infoMessage = new URLSearchParams(location.search).get('info');
+  const alreadyLoggedIn = Boolean(localStorage.getItem('token'));
+  const loggedInUserName = localStorage.getItem('userName') || '';
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/', { replace: true });
-    }
-  }, [navigate]);
+  const handleLogoutClear = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('authToken');
+    window.location.reload();
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -76,6 +80,15 @@ const LoginPage: React.FC = () => {
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('pages.loginPage.title')}</h2>
         <p className={styles.authDescription}>{t('pages.loginPage.email')} {t('pages.loginPage.password')}</p>
+
+        {alreadyLoggedIn && (
+          <div className={styles.infoBanner}>
+            {t('pages.loginPage.alreadyLoggedIn', { name: loggedInUserName })}
+            <button type="button" className={styles.authLinkButton} onClick={handleLogoutClear}>
+              {t('common.logout')}
+            </button>
+          </div>
+        )}
 
         {infoMessage && <div className={styles.feedback}>{infoMessage}</div>}
         {error && <div className={styles.errorMessage}>{error}</div>}
