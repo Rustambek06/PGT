@@ -102,16 +102,18 @@ export const apiService = {
 
   login: async (email: string, password: string) => {
     const response = await instance.post<AuthResponse>('/auth/login', { email, password });
-    const { token, name, id } = response.data;
+    const { token, name, id, role } = response.data;
     localStorage.setItem('token', token);
     localStorage.setItem('userName', name);
     localStorage.setItem('userId', id.toString());
-    return { token, name, id };
+    localStorage.setItem('userRole', role);
+    return { token, name, id, role };
   },
 
   logout: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     window.location.href = '/login';
   },
 

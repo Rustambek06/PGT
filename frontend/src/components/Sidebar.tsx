@@ -15,6 +15,7 @@ const Sidebar: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [userName, setUserName] = useState<string>(() => localStorage.getItem('userName') || '');
+  const [userRole, setUserRole] = useState<string>(() => localStorage.getItem('userRole') || '');
   const { isMobile } = useWindowSize();
 
   // Close sidebar when navigating on mobile
@@ -26,16 +27,17 @@ const Sidebar: React.FC = () => {
 
   // Sync username with localStorage updates from login/register events
   useEffect(() => {
-    const updateName = () => {
+    const updateUserData = () => {
       setUserName(localStorage.getItem('userName') || '');
+      setUserRole(localStorage.getItem('userRole') || '');
     };
 
-    updateName();
-    window.addEventListener('storage', updateName);
-    window.addEventListener('userLogin', updateName);
+    updateUserData();
+    window.addEventListener('storage', updateUserData);
+    window.addEventListener('userLogin', updateUserData);
     return () => {
-      window.removeEventListener('storage', updateName);
-      window.removeEventListener('userLogin', updateName);
+      window.removeEventListener('storage', updateUserData);
+      window.removeEventListener('userLogin', updateUserData);
     };
   }, []);
 
@@ -75,11 +77,15 @@ const Sidebar: React.FC = () => {
   };
 
   const navigationItems = [
+    { path: '/', labelKey: 'navigation.home', icon: '🏠' },
     { path: '/notes', labelKey: 'navigation.notes', icon: '📝' },
     { path: '/tasks', labelKey: 'navigation.tasks', icon: '✓' },
     { path: '/calendar', labelKey: 'navigation.calendar', icon: '📅' },
-    { path: '/users', labelKey: 'navigation.users', icon: '👥' },
     { path: '/categories', labelKey: 'navigation.categories', icon: '📂' },
+  ];
+
+  const adminNavigationItems = [
+    { path: '/users', labelKey: 'navigation.users', icon: '👥' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -148,6 +154,7 @@ const Sidebar: React.FC = () => {
                 onClick={() => {
                   localStorage.removeItem('token');
                   localStorage.removeItem('userName');
+                  localStorage.removeItem('userRole');
                   window.location.href = '/login';
                 }}
               >
@@ -202,6 +209,22 @@ const Sidebar: React.FC = () => {
               initial={!isMobile ? { opacity: 0, x: -20 } : undefined}
               animate={!isMobile ? { opacity: 1, x: 0 } : undefined}
               transition={!isMobile ? { duration: 0.3, delay: index * 0.1 } : undefined}
+            >
+              <Link
+                to={item.path}
+                className={`${styles.navLink} ${isActive(item.path) ? styles.active : ''}`}
+              >
+                <span className={styles.icon}>{item.icon}</span>
+                <span className={styles.label}>{t(item.labelKey)}</span>
+              </Link>
+            </motion.div>
+          ))}
+          {userRole === 'ADMIN' && adminNavigationItems.map((item, index) => (
+            <motion.div
+              key={item.path}
+              initial={!isMobile ? { opacity: 0, x: -20 } : undefined}
+              animate={!isMobile ? { opacity: 1, x: 0 } : undefined}
+              transition={!isMobile ? { duration: 0.3, delay: (navigationItems.length + index) * 0.1 } : undefined}
             >
               <Link
                 to={item.path}

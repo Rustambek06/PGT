@@ -10,5 +10,6 @@ import lombok.Setter;
 public class AuthResponse {
     private String token;
     private String name;
-    private Long id; // Добавим ID на всякий случай, фронтенду пригодится
+    private Long id;
+    private String role;
 }

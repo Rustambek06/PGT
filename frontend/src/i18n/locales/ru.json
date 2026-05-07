@@ -84,6 +84,7 @@
     }
   },
   "navigation": {
+    "home": "Главная",
     "notes": "Заметки",
     "tasks": "Задачи",
     "calendar": "Календарь",
@@ -101,7 +102,8 @@
       "invalidCredentials": "Неверные учетные данные",
       "enterEmail": "Введите email",
       "enterPassword": "Введите пароль",
-      "loginError": "Ошибка при входе"
+      "loginError": "Ошибка при входе",
+      "backHome": "Вернуться на главную"
     },
     "registerPage": {
       "title": "Регистрация",

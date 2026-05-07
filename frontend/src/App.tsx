@@ -22,6 +22,22 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
+const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('userRole');
+  const location = useLocation();
+
+  if (!token) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  if (userRole !== 'ADMIN') {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -62,11 +78,11 @@ const App: React.FC = () => {
         <Route
           path="/users"
           element={
-            <ProtectedRoute>
+            <AdminRoute>
               <MainLayout>
                 <UsersPage />
               </MainLayout>
-            </ProtectedRoute>
+            </AdminRoute>
           }
         />
         <Route

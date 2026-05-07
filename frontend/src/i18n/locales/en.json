@@ -84,6 +84,7 @@
     }
   },
   "navigation": {
+    "home": "Home",
     "notes": "Notes",
     "tasks": "Tasks",
     "calendar": "Calendar",
@@ -101,7 +102,8 @@
       "invalidCredentials": "Invalid credentials",
       "enterEmail": "Enter email",
       "enterPassword": "Enter password",
-      "loginError": "Login error"
+      "loginError": "Login error",
+      "backHome": "Back to Home"
     },
     "registerPage": {
       "title": "Register",

@@ -47,6 +47,7 @@ export interface AuthResponse {
   token: string;
   name: string;
   id: number;
+  role: string;
 }
 
 // Category types

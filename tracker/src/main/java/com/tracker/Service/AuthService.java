@@ -29,8 +29,8 @@ public class AuthService {
 
         String token = jwtUtils.generateToken(user.getEmail(), user.getId());
         
-        // Возвращаем объект вместо строки
-        return new AuthResponse(token, user.getName(), user.getId());
+        // Возвращаем объект со всеми данными, включая роль
+        return new AuthResponse(token, user.getName(), user.getId(), user.getRole().name());
     }
 
     public void register(UserRequest request) {

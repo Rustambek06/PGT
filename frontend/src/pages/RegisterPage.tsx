@@ -166,6 +166,7 @@ const RegisterPage: React.FC = () => {
         </form>
 
         <div className={styles.helperLinks}>
+          <Link to="/">🏠 {t('pages.registerPage.backHome', 'Вернуться на главную')}</Link>
           <span>{t('pages.registerPage.haveAccount')}</span>
           <Link to="/login">{t('pages.registerPage.login')}</Link>
         </div>
