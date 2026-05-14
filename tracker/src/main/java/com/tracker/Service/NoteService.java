@@ -15,6 +15,8 @@ import com.tracker.Utils.SecurityUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -81,13 +83,16 @@ public class NoteService {
     }
 
     public void delete(Long userId, Long noteId) {
-        boolean isNoteExist = noteRepository.existsByIdAndUserId(noteId, userId);
+        // boolean isNoteExist = noteRepository.existsByIdAndUserId(noteId, userId);
 
-        if (isNoteExist) {
-            noteRepository.deleteById(noteId);
-        } else {
-            String message = "Note not found";
-            throw new NoteNotFoundException(message);
-        }
+        // if (isNoteExist) {
+        //     noteRepository.deleteById(noteId);
+        // } else {
+        //     String message = "Note not found";
+        //     throw new NoteNotFoundException(message);
+        // }
+        Note noteToDelete = noteRepository.findByIdAndUserId(noteId, userId)
+            .orElseThrow(() -> new EntityNotFoundException("Note not found/"));
+        noteRepository.delete(noteToDelete);
     }   
 }
